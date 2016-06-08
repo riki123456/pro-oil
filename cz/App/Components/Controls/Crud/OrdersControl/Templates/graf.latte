@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="fa {$grafTitleIconClass} fa-bar-chart fa-fw"></i> {$grafTitle}
+    </div>
+    <!-- /.panel-heading -->
+    <div class="panel-body">
+        <div class="morris" id="morris-bar-chart-type-{$grafType}"
+             data-name='{$grafType == 1 ? "Bar" : "Line"}'
+             data-type='{$grafType}'
+             data-xkey='{$grafXkey}'
+             data-ykeys='{$grafYkeys|noescape}'
+             data-label='{$grafLabel|noescape}'
+             data-data='{$grafData|noescape}'
+             ></div>
+    </div>
+</div>
+<!-- /.panel-body -->

@@ -1,0 +1,65 @@
+<div class="panel panel-body panel-default">
+    <!-- tohle je jen div, ktery urcuje, ze chceme zneviditelnit levy sloupec s menu (podle class="obsah-kosiku" -->    
+    <div class="center fa-size-2x obsah-kosiku"></div>
+    
+    <form method="post" action="{link cart 'recalculate'}">
+        <div class="table-responsive">
+            <table class="table table-condensed">
+                <thead>
+                    <tr><th>Název</th><th>Počet</th><th>MJ</th><th>Cena/ks bez DPH</th><th>Cena celkem bez DPH</th><th>Cena celkem s DPH ({constant("DPH_PROCENTO")}&nbsp;%)<th>&nbsp;</th></tr>
+                </thead>
+                <tbody>
+                    {var $cena_celkem_bez_dph = 0}
+                    {foreach $orders as $order} 
+                        {var $_pocet = $orders_session[$order->id]['pocet']}
+                        {var $_cena_bez = $order->cena_bez_dph}
+                        {var $_cena_s = $order->cena_bez_dph * constant('DPH')}
+                        {var $cena_celkem_bez_dph = $cena_celkem_bez_dph + ($_pocet * $_cena_bez)}
+                        <tr>
+                            <td>{$order->nazev}</td>
+                            <td>
+                                <input type="text" class="form-control" size="1" name="items[{$order->id}][pocet]" value="{$_pocet}" />
+                                <!-- kvuli zpetne kompatibilite, jiz nepouzivame -->
+                                <input type="hidden" name="items[{$order->id}][cena_s_dph]" value="{$_cena_s}" />
+                            </td>
+                            <td>{$order->baleni_pocet}{$order->baleni_mj}</td>
+                            <td>{$_cena_bez|money:'Kč'}</td>
+                            <td>{$_pocet * $_cena_bez|money:'Kč'}</td>
+                            <td>{ceil($_pocet * $_cena_s)|money:'Kč'}</td>
+                            <td><a href="{link cart! removeItem, $order->id}" class="fa fa-remove inverse"></a></td>
+                        </tr>
+                    {/foreach}
+
+                    <tr><td colspan="7">&nbsp;</td></tr>
+                    <tr>
+                        <td colspan="5">Cena celkem bez DPH <i>(suma cen objednaných položek bez DPH)</i></td>
+                        <td colspan="2" style="text-align: right;">
+                            <span id="cena_celkem_bez_dph">{$cena_celkem_bez_dph|money:'Kč'}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"><span class="fa-size-1a5x active">Cena celkem s DPH <i>(cena celkem bez DPH * {constant('DPH_PROCENTO')}%)</i></span></td>
+                        <td colspan="2" style="text-align: right;">
+                            <span class="fa-size-1a5x active">
+                                <span id="cena_celkem_s_dph">{ceil($cena_celkem_bez_dph * constant('DPH'))|money: 'Kč'}</span>
+                                <sup class="fa fa-info-circle fa-size-0a7x" data-toggle="tooltip" data-placement="top" title="Částka je zaokrouhlena na celé koruny nahoru."></sup>
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+
+                        <td colspan="7">
+                            <a href="{plink Default:}" class="btn btn-primary"><span class="fa fa-angle-double-left"></span> Zpět do obchodu</a>
+                            <div class="pull-right">
+                                <a href="{link cart! remove}" class="btn btn-primary"><span class="fa fa-remove"></span> Vyprázdnit košík</a>
+                                <!-- tenhle odkaz jen reloadne stranku. Tim nacte znova session a mame prepocitano ;) -- do session se totiz uklada pri zmene inputu v objednavce :) -->
+                                <button type="submit" href="#" class="btn btn-primary"><span class="fa fa-refresh"></span> Přepočítat cenu</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>

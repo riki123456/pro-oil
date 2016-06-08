@@ -1,0 +1,14 @@
+# Apache configuration file (see httpd.apache.org/docs/current/mod/quickreference.html)
+
+# disable directory listing
+<IfModule mod_autoindex.c>
+        Options -Indexes
+</IfModule>
+
+# enable cool URL
+<IfModule mod_rewrite.c>
+        RewriteEngine On
+
+	RewriteCond %{HTTP_HOST} .*\.cz [NC]
+	RewriteRule ^(.*)$ cz/index.php [L]
+</IfModule>

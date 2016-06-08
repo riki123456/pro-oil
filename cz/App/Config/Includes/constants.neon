@@ -1,0 +1,57 @@
+constants:
+    LANG: cs
+
+    GOOGLE_ANALYTICS: true
+    ZBOZI_ANALYTICS: true
+    HEUREKA_ANALYTICS: true
+    HEUREKA_OVERENO_ZAKAZNIKY: true
+    HEUREKA_API: 'http://www.heureka.cz/direct/dotaznik/objednavka.php'
+    HEUREKA_SECRET_CODE: '44fe6f1705efab4023718dbef121cd78'
+
+    DPH: 1.21
+    DPH_PROCENTO: 21
+
+    DOMAIN: pro-oil.cz
+
+    DB_PREFIX: rk_
+
+    ROOT_FS_WWW: %wwwDir%
+    ROOT_WEB_WWW: /cz/www
+
+    TINY_MCE_CLASS: tinyMCE
+    TINY_MCE_BASEURL: /cz/www/media/tinymce
+
+    IMAGE_SIZE_LARGE_WIDTH: 600
+    IMAGE_SIZE_LARGE_HEIGHT: 800
+    IMAGE_SIZE_NORMAL_WIDTH: 300
+    IMAGE_SIZE_NORMAL_HEIGHT: 400
+    IMAGE_SIZE_SMALL_WIDTH: 100
+    IMAGE_SIZE_SMALL_HEIGHT: 200
+
+    SLIDESHOW_SIZE_WIDTH: 700
+    SLIDESHOW_SIZE_HEIGHT: 200
+
+    FLASH_OK: success
+    FLASH_INFO: info
+    FLASH_WARN: warning
+    FLASH_ERR: danger
+
+    ROLE_ROOT: root
+    ROLE_ADMIN: admin
+    ROLE_EDITOR: editor
+    ROLE_PARTNER: partner
+    ROLE_REGISTERED: registered
+    ROLE_GUEST: guest
+
+    # heslo na vse krome petras@pro-oil.cz je: fojtik.prooil
+    MAIL_TELEFON: +420 737 283 982
+    MAIL_OBJEDNAVKY: objednavky@pro-oil.cz # presmerovavat na kancelar@pro-oil.cz
+    MAIL_OBJEDNAVKY_NAME: Objednávky - Pro-Oil Morava s.r.o.
+    MAIL_ESHOP: eshop@pro-oil.cz
+    MAIL_KANCELAR: kancelar@pro-oil.cz
+    MAIL_REGISTRACE: registrace@pro-iol.cz
+    MAIL_PRODEJCE: fojtik@pro-oil.cz
+    MAIL_ADMIN: admin@pro-oil.cz
+    MAIL_NOREPLY: noreply@pro-oil.cz
+    MAIL_NOREPLY_NAME: Pro-Oil Morava s.r.o.
+    MAIL_HEUREKA_DOTAZNIKY: dotaznik@pro-oil.cz

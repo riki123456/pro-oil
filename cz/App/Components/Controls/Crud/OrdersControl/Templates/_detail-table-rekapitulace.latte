@@ -1,0 +1,27 @@
+{var $cena_celkem_bez_dph = 0}
+{foreach $data as $d}
+    {var $cena_celkem_bez_dph = $cena_celkem_bez_dph + ($d->ora_pocet * $d->ora_cena_bez_dph)}
+{/foreach}
+
+{var $_cena_celkem_bez_dph__plus__doprava_bez_dph = $cena_celkem_bez_dph + $dataZakaznik->objednavka_hlavicka->doprava_cena_bez_dph}
+{var $_cena_celkem_s_dph__plus__doprava_s_dph = ($cena_celkem_bez_dph * constant("DPH")) + $dataZakaznik->objednavka_hlavicka->doprava_cena_s_dph}
+
+{var $_cena_jenom_dph = ($cena_celkem_bez_dph * (constant("DPH") - 1))}
+{var $_doprava_jenom_dph = $dataZakaznik->objednavka_hlavicka->doprava_cena_s_dph - $dataZakaznik->objednavka_hlavicka->doprava_cena_bez_dph}
+
+{var $_cena_jenom_dph__plus__doprava_jenom_dph = $_cena_jenom_dph + $_doprava_jenom_dph}
+
+<tr><td colspan="6"><b>REKAPITULACE OBJEDNÁVKY</b></td></tr>
+<tr>
+    <td colspan="5"><b>CENA CELKEM BEZ DPH</b> <i>(suma cen objednaných položek  bez DPH + cena dopravy bez DPH).</i></td>
+    <td>{$_cena_celkem_bez_dph__plus__doprava_bez_dph|money: 'Kč'}</td>
+</tr>
+<tr>
+    <td colspan="5"><b>DPH {constant("DPH_PROCENTO")} %</b></td>
+    <td>{ceil($_cena_jenom_dph__plus__doprava_jenom_dph)|money: 'Kč'}</td>
+</tr>
+<tr>
+    <td colspan="5"><b>CENA CELKEM S DPH</b> <i>(cena celkem bez DPH + {constant("DPH_PROCENTO")} % DPH zaokrouhleno na celé číslo)</i></td>
+    <td>{ceil($_cena_celkem_s_dph__plus__doprava_s_dph)|money: 'Kč'}</td>
+</tr>
+

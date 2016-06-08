@@ -1,0 +1,12 @@
+@media (max-width: (@screen-xs-min - 1)) {
+    .margin-bottom-small {margin-bottom: ceil(@line-height-computed / 6);}
+    .margin-bottom-base {margin-bottom: ceil(@line-height-computed / 4);}
+    .margin-bottom-large {margin-bottom: ceil(@line-height-computed / 2);}  
+}
+
+@media (min-width: (@screen-xs-min)) {
+    .margin-bottom-small {margin-bottom: ceil(@line-height-computed / 4);}
+    .margin-bottom-base {margin-bottom: ceil(@line-height-computed / 2);}
+    .margin-bottom-large {margin-bottom: ceil(@line-height-computed);}  
+}
+

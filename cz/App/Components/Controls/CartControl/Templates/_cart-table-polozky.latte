@@ -1,0 +1,25 @@
+<tr><td colspan="6"><b>OBJEDNANÉ POLOŽKY</b></td></tr>
+<tr>
+    <td><b>NÁZEV</b></td>
+    <td><b>Počet</b></td>
+    <td><b>MJ</b></td>
+    {*<td><b>Dostupnost</b></td>*}
+    <td><b>Cena/ks bez DPH</b></td>
+    <td><b>Cena Celkem bez  DPH</b></td>
+    <td><b>Cena celkem s DPH ({constant("DPH_PROCENTO")} %)</b></td>
+</tr>
+{var $cena_celkem_s_dph = 0}
+{var $cena_celkem_bez_dph = 0}
+{foreach $data as $d}
+    <tr>
+        <td>{$d->ora_polozka_nazev}</td>
+        <td>{$d->ora_pocet}</td>
+        <td>{$d->ora_polozka_baleni_pocet}{$d->ora_polozka_baleni_mj}</td>        
+        {*<td>{$d->ora_polozka_dostupnost}</td>*}
+        <td>{$d->ora_cena_bez_dph|money: 'Kč'}</td>
+        <td>{$d->ora_pocet * $d->ora_cena_bez_dph|money: 'Kč'}</td>
+        <td>{ceil($d->ora_pocet * $d->ora_cena_s_dph)|money: 'Kč'}</td>
+    </tr>
+{/foreach}
+
+<tr><td colspan="6">&nbsp;</td></tr>

@@ -1,0 +1,22 @@
+<!-- udaje o zakaznikovi, firme ... -->
+<hr/>
+<h3>Údaje zákazníka</h3>
+
+{if count($dataZakaznik) > 0 }
+    <table width="95%">
+        <tr>
+            <td colspan="2">
+                {if $dataZakaznik->user_type == 1} Koncový zákazník {/if}
+                {if $dataZakaznik->user_type == 2} Fyzická osoba{/if}
+                {if $dataZakaznik->user_type == 3} Právnická osoba{/if}
+                , 
+                {if $dataZakaznik->platce_dph == 1} plátce DPH {else} neplátce DPH {/if}
+            </td>
+        </tr>
+        {if '' != $dataZakaznik->firma}<tr><td>Firma</td><td>{$dataZakaznik->firma}</td></tr>{/if}
+        {if '' != $dataZakaznik->ico}<tr><td>IČO</td><td>{$dataZakaznik->ico}</td></tr>{/if}
+        {if '' != $dataZakaznik->dic}<tr><td>DIČ</td><td>{$dataZakaznik->dic}</td></tr>{/if}
+        
+        {include '_cart-table-zakaznik-adresy.latte'}
+    </table>
+{/if}

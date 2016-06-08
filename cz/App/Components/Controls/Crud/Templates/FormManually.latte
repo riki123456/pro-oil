@@ -1,0 +1,74 @@
+{* zjistime si, zda nechceme renderovat nejake subContainery, definovane nadrizenou sablonou *}
+{var $subContainerControls = array()}
+{if (isset($subContainersDefined) === true)}
+    {foreach $subContainersDefined as $subKey => $subForm}
+        {var $subContainerControls = array_merge($subForm['insideControls'], $subContainerControls)}
+    {/foreach}
+{/if}
+
+<div class="komponent">
+    {* ted uz renderujeme formular *}
+    {control $crudForm begin}
+
+    <!-- hidden fields -->
+    <div n:foreach="$crudForm->getComponents(TRUE, 'Nette\Forms\Controls\HiddenField') as $control">{$control->control}</div>
+
+    <!-- groups (nerenderujeme buttony, ty az na konec) -->
+    <fieldset n:foreach="$crudForm->groups as $group" n:if="$group->controls && $group->getOption('visual')" n:block="#group">
+        <legend n:ifset="$group->options['label']">{$group->options['label']}</legend>
+        <i n:ifset="$group->options['description']">{$group->options['description']}</i>
+
+        {foreach $group->controls as $control}
+            {if !$control instanceof Nette\Forms\Controls\Button && !$control->getOption('rendered') && $control->getForm(FALSE) === $crudForm}
+                {if false !== in_array($control->getName(), $subContainerControls)}
+                    {foreach $subContainersDefined as $subKey => $subForm}
+                        {if false === $subForm['rendered']}
+                            {* musim pouzit "fintu" s prirazenim hodnoty - jinak mi nette hodi chybu a obycejne volani se neprovede ... nevim proc :( *}
+                            {var $y = $subContainersDefined[$subKey]['rendered'] = true}
+                            {var $x = $control->setOption('rendered', TRUE)}
+                            {$subForm['content']|noescape}
+                        {/if}
+                    {/foreach}
+
+                {else}
+                    <!-- tak predano nic neni, takze jedem v default (nerenderujeme buttony, ty az na konec) -->
+                    <div n:block="#controls" class="form-group">
+                        <div class="col-sm-2 control-label {$control->isRequired() ? 'required' : ''}" n:block="#label">
+                            {if $control instanceof Nette\Forms\Controls\Button || $control instanceof Nette\Forms\Controls\Checkbox && !isset($control->label)}
+                                &nbsp;
+                            {else}
+                                {!$control->label}
+                            {/if}
+                        </div>
+                        <div class="col-sm-9" n:block="#control">
+                            {!$control->control}
+                            {if $control instanceof Nette\Forms\Controls\Checkbox}
+                                {!$control->label}
+                            {/if}
+                            {if $control->getOption('description')}
+                                {$control->getOption('description')}
+                            {/if}
+                        </div>
+                    </div>
+                {/if}
+            {/if}
+        {/foreach}
+
+    </fieldset>
+
+    <!-- non-group -->
+    {include #controls, group => $crudForm}
+
+    <!-- buttons -->
+    <div class="form-group">
+        <div class="col-sm-2 control-label">&nbsp;</div>
+        <div class="col-sm-9">
+            {foreach $crudForm->getComponents(TRUE, 'Nette\Forms\Controls\Button') as $control}
+                {$control->control}
+            {/foreach}
+        </div>
+    </div>
+
+    {control $crudForm end}
+
+</div>

@@ -1,0 +1,52 @@
+{* nejdrive si vyrenderujeme content. tim ziskame pripadna data z komponent *}
+{capture $content}
+    <div>{include content}</div>
+{/capture}
+
+{include '../../Base/Templates/Layouts/top.latte'}
+
+<div id="wrapper">
+    <!-- loading dialog -->
+    {include Components/dialogModal_Loading.latte|strip}
+
+    <!-- Navigation -->
+    {include Components/navigation.latte|strip}
+    <!-- /Navigation -->
+
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <!-- Header -->
+            {ifset header}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="page-header">{include header|strip}</h1>
+                    </div>
+                    <!-- /.col-cd-12 -->
+                </div>
+                <!-- /.row -->
+            {/ifset}
+            <!-- Header -->
+
+            <!-- Flash messages -->  
+            {include Components/messages-flash.latte|strip}                    
+            <!-- /Flash messages -->
+
+            <!-- Breadcrumb -->
+            {include Components/navigation.breadcrumb.latte|strip}
+            <!-- /Breadcrum -->
+
+            <!-- Page Content -->
+            <div class="row">
+                <div class="col-md-12">
+                    {! $content}
+                </div>
+            </div>
+            <!-- /Page Content -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
+
+{include '../../Base/Templates/Layouts/bottom.latte'}

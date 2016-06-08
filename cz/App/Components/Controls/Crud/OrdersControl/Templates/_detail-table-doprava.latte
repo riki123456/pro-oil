@@ -1,0 +1,27 @@
+{if count($dataZakaznik) > 0 }
+    {if '' != $dataZakaznik->objednavka_hlavicka->doprava_nazev}
+        <tr><td colspan="6"><b>CENA DOPRAVY</b></td></tr>
+        <tr>
+            <td><b>Způsob dopravy:</b></td>
+            <td colspan="2">{$dataZakaznik->objednavka_hlavicka->doprava_nazev}</td>
+            <td><b>Cena dopravy:</b></td>
+            <td>{$dataZakaznik->objednavka_hlavicka->doprava_cena_bez_dph|money: 'Kč'}</td>
+            <td>{ceil($dataZakaznik->objednavka_hlavicka->doprava_cena_s_dph)|money: 'Kč'}</td>
+        </tr>
+        
+        <tr><td colspan="6">&nbsp;</td></tr>
+    {/if}
+    
+    {if '' != $dataZakaznik->objednavka_hlavicka->platba_nazev}
+        <tr><td colspan="6"><b>PLATBA</b></td></tr>
+        <tr>
+            <td><b>Způsob platby:</b></td>
+            <td colspan="2">{$dataZakaznik->objednavka_hlavicka->platba_nazev}</td>
+            <td><b>Cena platby:</b></td>
+            <td>{$dataZakaznik->objednavka_hlavicka->platba_cena_bez_dph|money: 'Kč'}</td>
+            <td>{ceil($dataZakaznik->objednavka_hlavicka->platba_cena_s_dph)|money: 'Kč'}</td>
+        </tr>
+        
+        <tr><td colspan="6">&nbsp;</td></tr>
+    {/if}
+{/if}

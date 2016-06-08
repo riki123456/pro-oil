@@ -1,0 +1,45 @@
+extensions:
+    webloader: WebLoader\Nette\Extension()
+
+services:
+    wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%, '/cz/www')
+
+webloader:
+    css:
+        admin:
+            files:                
+                - %wwwDir%/media/fonts/font-awesome/css/font-awesome.min.css
+                - %wwwDir%/media/metisMenu.min.css
+                - %wwwDir%/media/bootstrap/css/admin.css                
+                
+            fileFilters:
+                - @wlCssFilter
+        front:
+            files:
+                - %wwwDir%/media/fonts/font-awesome/css/font-awesome.min.css
+                - %wwwDir%/media/bootstrap/css/front.css
+            fileFilters:
+                - @wlCssFilter
+        dynamic:
+            files:
+            fileFilters:
+                - @wlCssFilter
+    js:
+        admin:
+            files:
+                - %wwwDir%/media/jquery/jquery-1.11.1.min.js
+                - %wwwDir%/media/bootstrap/js/bootstrap.min.js
+                - %wwwDir%/media/nette/nette.ajax.js
+                - %wwwDir%/media/metisMenu.min.js
+                - %wwwDir%/media/sb-admin-2.js
+                - %wwwDir%/media/project.js  
+        front:
+            files:
+                - %wwwDir%/media/jquery/jquery-1.11.1.min.js
+                - %wwwDir%/media/jquery/jquery.blockUI.min.js
+                - %wwwDir%/media/bootstrap/js/bootstrap.min.js
+                - %wwwDir%/media/nette/nette.ajax.js
+                #- %wwwDir%/media/nette/extensions/spinner.ajax.js
+                - %wwwDir%/media/project.js
+        dynamic:
+            files:

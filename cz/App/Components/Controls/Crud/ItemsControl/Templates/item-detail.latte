@@ -1,0 +1,139 @@
+{snippetArea productsContainer}
+    {dump $itemData}
+    {var $_itemNazevWebalize = \Nette\Utils\Strings::webalize($itemData['nazev'])}
+    <div class="row">
+        <div class="col-xs-12 product-col">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="product product-detail">
+                        <div n:snippet="product-sn1-{$_itemNazevWebalize}">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h2>
+                                        <a href="{plink Default:itemDetail $itemData['kategorie']['alias'], $itemData['vyrobce']['alias'], $itemData['alias']}" 
+                                           class="product-name" data-toggle="tooltip" data-placement="bottom" title="Zobrazit detail produktu">
+                                            <span>{$itemData['nazev']}</span>
+                                        </a>
+                                    </h2>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="product-img margin-bottom-small">
+                                        {if '' == $itemData['img']}
+                                            <img class="img-responsive" src="{constant('ROOT_WEB_WWW')}/images/layout/nopic.png" alt="Obrázek chybí" />
+                                        {else}
+                                            <a href="{constant('ROOT_WEB_WWW')}/images/items/large/{$itemData['img']}" class="photo" data-toggle="tooltip" data-placement="bottom" title="Zvětšit obrázek">
+                                                <img class="img-responsive" src="{constant('ROOT_WEB_WWW')}/images/items/normal/{$itemData['img']}" rel="photo" alt="{$itemData['nazev']}">
+                                            </a>      
+                                        {/if}
+                                    </div>
+                                </div>
+                                <div class="col-xs-9">
+                                    <p>{$itemData['popis_kratky']}</p>
+                                    <div><b>Specifikace SAE: </b>{$itemData['specifikace_sae']}</div>
+                                    <div><b>Specifikace API: </b>{$itemData['specifikace_api']}</div>
+                                    <div><b>Specifikace ACEA: </b>{$itemData['specifikace_acea']}</div>
+                                    <div><b>Specifikace výrobce: </b>{$itemData['specifikace_vyrobce']}</div>
+
+                                    <hr/>
+
+                                    <div class="fa-size-1a4x active product-price">
+                                        Cena: <span>{ceil($itemData['cena_bez_dph'] * constant('DPH'))|money: 'Kč'}</span>
+                                        <span class="product-price-int-value hidden">{$itemData['cena_bez_dph'] * constant('DPH')}</span>
+                                        <span class="small">
+                                            (vč. DPH {constant('DPH_PROCENTO')}%) 
+                                            <span class="fa fa-info-circle" data-toggle="tooltip" data-plament="top" title="Částka je zaokrouhlena na celé koruny nahoru"></span>
+                                        </span>
+                                    </div>
+                                    <div>Cena bez DPH: {$itemData['cena_bez_dph']|money: 'Kč'}</div>
+
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div n:snippet="product-sn2-{$_itemNazevWebalize}" class="col-xs-3 center">
+                                <span class="availability fa-size-1a3x">{$itemData['dostupnost']['nazev']}</span>
+                            </div>
+                            <div class="col-xs-9">
+                                <div class="product-bottomm fa-size-2x">
+                                    <span class="center cart-mini-update-message" style="display: none;">
+                                        Zboží bylo přidáno 
+                                        <a href="{plink Default:shoppingCart}" class="inverse">do košíku</a>
+                                    </span>
+                                    <form>
+                                        <!-- .input-group -->
+                                        <div class="input-group product-ks margin-bottom-small">
+                                            <select name="baleni_dalsi" class="baleni-switcher form-control" data-toggle="tooltip" data-placement="auto" title="balení">  
+                                                {ifset $itemDataBaleniDalsi}
+                                                    {var $_baleni_dalsi = explode('|', $itemDataBaleniDalsi)}
+                                                    {foreach $_baleni_dalsi as $_bd}
+                                                        {var $_baleni_dalsi_data = explode('#', $_bd)}
+                                                        <option value="{link productSwitch! $_baleni_dalsi_data[0], 'detail'}" {if $itemData['baleni_pocet'] == $_baleni_dalsi_data[1]} selected="selected"{/if}>
+                                                            {$_baleni_dalsi_data[1] . $_baleni_dalsi_data[2]}
+                                                        </option>
+                                                    {/foreach}
+                                                {/ifset}
+                                            </select>
+                                            <input type="number" name="baleni_pocet" class="baleni_pocet form-control" value="1" data-toggle="tooltip" data-placement="auto" title="počet">
+                                            <span class="input-group-btn cart-mini-update ">
+                                                <button 
+                                                    class="btn btn-primary" data-toggle="tooltip" data-placement="auto" title="Přidat do košíku" type="button">
+                                                    <a class="fa fa-cart-plus" style="color: white;"></a>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <!-- /.input-group -->
+                                    </form>
+
+                                    <div n:snippet="product-sn3-{$_itemNazevWebalize}" class="hidden">
+                                        <a href="{plink Default:itemDetail $itemData['kategorie']['alias'], $itemData['vyrobce']['alias'], $itemData['alias']}" 
+                                           data-item-id="{$itemData['id']}" class="product-detail btn btn-default margin-bottom-small"
+                                           >Detail produktu</a>
+                                    </div>
+                                </div>
+
+                                <hr/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 center">
+                                {if '' != $itemData['schvaleno_oem']}
+                                    <a href="javascript:void(0);" class="item-schvaleno-oem fa-size-1a3x" style="color: #bc1616;"
+                                       data-confirm="modal" data-confirm-title="Schváleno OEM"
+                                       data-confirm-text="{$itemData['schvaleno_oem']}">
+                                        Schváleno OEM
+                                        <img src="{constant('ROOT_WEB_WWW')}/images/schvaleno-oem.png" style="height: 50px;" />
+                                    </a>
+                                {/if}
+                            </div>
+                            <div class="col-xs-9">
+                                <div n:snippet="product-sn4-{$_itemNazevWebalize}">
+                                    <div class="fa-size-2x">Popis produktu</div>
+                                    {$itemData['popis_dlouhy']}
+                                </div>
+
+                                <hr/>
+
+                                <div class="fa-size-1a5x margin-bottom-base">
+                                    <a href="javascript:void(0);" id="form-question">
+                                        <span class="fa fa-question-circle"></span> Zeptejte se prodejce
+                                    </a>
+                                </div>
+                                <span class="hidden">{control questionForm}</span>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
+            <!--
+            <hr/>
+            <p class="fa-size-2x center"><b>Související zboží</b></p>
+            -->
+
+        </div>
+    </div>
+{/snippetArea}

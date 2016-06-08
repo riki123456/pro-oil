@@ -1,0 +1,21 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# http://nette.org/security-warning
+#
+
+includes:
+    - Includes/constants.neon
+    - Includes/parameters.neon
+    - Includes/application.neon
+    - Includes/services.neon
+    - Includes/session.neon
+    - Includes/routing.neon
+    - Includes/security.neon
+    - Includes/di.neon
+    - Includes/database.neon
+    - Includes/extensions.neon
+    - Includes/tracy.neon
+
+php:
+    date.timezone: Europe/Prague
+    zlib.output_compression: yes

@@ -1,0 +1,304 @@
+#body {
+    min-height: 100%;
+    min-width: 100%;
+    background: #f5f5f5 url(../../../images/layout/page_bg.png) center top no-repeat;
+    color: @text-color;
+}
+
+#body .navbar-brand {
+    font-size: inherit;
+}
+
+#footer {
+    background: @navbar-default-bg /*#cbe9f4*/;
+    border-top: 1px solid @navbar-default-border;
+}
+.footer-content {
+    padding-top: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+.footer-content div {
+    line-height: 40px;
+}
+.footer-content a {
+    color: @link-default-color;
+    text-decoration: underline;
+
+    &:hover,
+        &:focus {
+        text-decoration: none;
+    }
+}
+
+.flash-messages {
+    margin-right: 0px;
+}
+.breadcrumb-row {
+    margin-right: 0px;
+    white-space: nowrap; 
+    overflow-x: hidden;
+}
+.breadcrumb {
+    border: 1px solid @breadcrumb-border-color;
+
+    > .active {
+        font-weight: bold;
+    }
+    > li {
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        + li:before {
+            content: @breadcrumb-separator; //\00a0"; // Unicode space added since inline-block means non-collapsing white-space
+            padding: 0 5px;
+            color: @breadcrumb-color;
+        }
+    }
+    > li > a {
+        color: @breadcrumb-color;
+
+        &:hover,
+            &:focus {
+            text-decoration: none;
+            color: @navbar-default-link-hover-color;
+        }
+    }
+}
+
+.product-manipulation-row {
+    line-height: @line-height-computed * 2;
+}
+
+.container-front #form-search {
+    position: relative;
+}
+.container-front #form-search #form-search-expanded {
+    display: none;
+    position: absolute; 
+    left: 0; 
+    margin-top: 2px;
+    background-color: #f5f5f5; 
+    border: 1px solid @navbar-default-border; 
+    padding: 2px; 
+    z-index: 999999;
+}
+.container-front #form-search #form-search-expanded > div:first-child {
+    margin-right: 0px;
+}
+
+#shopping-cart {
+    font-weight: bold;
+}
+#shopping-cart .badge {
+    color: @text-color;
+    font-weight: normal;
+}
+#container-navbar-top {
+    /*background: black url(../../../images/layout/menu_bg.png) center top repeat;*/
+    background-color: black;
+}
+
+#container-navbar-top .navbar-black {
+    background-color: transparent;
+    margin-bottom: 0px;
+    border: 0px;
+}
+
+.active {
+    color: @link-active-color;
+}
+.center {
+    text-align: center;
+}
+
+a {
+    color: @link-default-color;
+    text-decoration: none;
+    
+    &:hover,
+        &:focus {
+        color: @link-active-color;
+        text-decoration: none;
+    }
+}
+
+a.active {
+   color: @link-active-color; 
+}
+
+a.inverse {
+    color: @link-active-color;
+    text-decoration: none;
+
+    &:hover,
+        &:focus {
+        color: @link-default-color;
+        text-decoration: none;
+    }
+}
+
+
+#container-navbar-top a {
+    color: white;
+
+    &:hover,
+        &:focus {
+        color: @navbar-default-link-hover-color;
+        background-color: @navbar-default-link-hover-bg;
+    }
+}
+#container-navbar-top a.active {
+    &,
+    &:hover,
+        &:focus {
+        color: @navbar-default-link-active-color;
+        background-color: @navbar-default-link-active-bg;
+    }
+}
+
+.container-front .panel-body table.table {
+    margin-bottom: 0;
+}
+
+.container-front .row #items-pagination-container {
+    text-align: center;
+}
+.container-front .row #items-pagination li.pointer {
+    cursor: pointer;
+}
+
+.container-front .rightbar .panel-heading {
+    color: @navbar-default-color;
+    text-align: center;
+    background-color: @brand-primary;
+}
+.container-front .rightbar .panel-body {
+    padding: 5px;
+    text-align: center;
+}
+.container-front .rightbar .panel-body hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.container-front .sidebar-nav .navbar-nav {
+    margin: 0px;
+}
+.container-front .sidebar-nav .navbar-nav li {
+    width: 100%;
+}
+
+.container-front .sidebar-nav .nav-second-level li {
+    padding-left: 15px;
+    border-bottom: none !important;
+}
+
+.container-front .sidebar-nav li {
+    border-bottom: 1px solid @navbar-default-border;
+}
+
+.container-front .sidebar-nav li:last-child {
+    border-bottom: 0;
+}
+
+.container-front .sidebar-nav li a {
+    font-weight: bold;
+}
+
+.container-front .sidebar-nav li a.active {
+    color: @link-active-color;
+}
+
+.container-front .sidebar-nav .navbar-header .navbar-brand {
+    padding: @navbar-padding-vertical @navbar-padding-horizontal;
+    color: @navbar-default-link-color;
+}
+
+.container-front .product-col {
+    padding: 0;
+}
+.container-front .product-col .panel {
+    margin-right: 15px;
+    border: 1px solid @panel-default-border;
+}
+.container-front .product-col .panel-body {
+    padding: 0;
+}
+
+.container-front .product-col .product {
+    padding: 20px 5px 5px 5px;
+    background: #fff url(../../../images/layout/product_v_bg.png) center bottom repeat-x;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    border-radius: @border-radius-base;
+    font-weight: bold;
+    height: 430px;
+}
+
+.container-front .product-col .product.product-detail {
+    text-align: left;
+    font-weight: normal;
+    height: auto;
+}
+.container-front .product-col .product.product-detail h2 {
+    margin-top: -5px;
+    margin-bottom: 15px;
+    margin-left: 10px;
+}
+.container-front .product-img {       
+    background: #fff;
+    vertical-align: middle;
+    text-align: center;
+}
+.container-front .product-img a {
+    display: inline-block;
+}
+.container-front .product-img-akce a {
+    display: inline-block;
+}
+.container-front .product-img-akce img {
+    height: 100px;
+    display: inline-block;
+}
+.container-front .product-img img {
+    height: 150px;
+    display: inline-block;
+}
+.container-front .product div.product-bottom {
+    position: absolute;
+    bottom: 0;
+}
+.container-front .product.product-detail div.product-bottom {
+    position: inherit;
+}
+.container-front .product span.product-group {
+    font-size: @font-size-small;
+    font-style: italic;
+    display: block;
+    font-weight: normal;
+}
+.container-front .product span.product-price {
+    font-weight: bold;
+    display: block;
+}
+.container-front .product span.product-price .small {
+    font-weight: normal;
+}
+.container-front .product span.availability {
+    font-weight: normal;
+    display: block;
+    color: #3c972a;
+}
+.container-front .product div.product-ks {
+    margin-right: 5px;
+    /*margin-left: 15px;*/
+}
+.container-front .product div.product-ks .baleni-switcher {
+    padding: 6px 1px;
+    width: 40%;
+}
+.container-front .product div.product-ks .baleni_pocet {
+    width: 60%;
+}

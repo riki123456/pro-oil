@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Components\Controls\Crud\UomControl;
+
+use Nette\Application\UI\Form,
+    App\Model\Repositories\Repository,
+    App\Components\Controls\Crud;
+
+/**
+ * Description of UomControl
+ *
+ * @author miroslav.petras
+ */
+class UomControl extends Crud\CrudControl {
+
+    protected $repoTablename = 'uom';
+
+    /** @var Repository $repo */
+    protected $repo;
+
+    /**
+     * konfigurace pro bootstrap table
+     * 
+     * array('dbColumnName' => 'showName', 'dbColumnName' => 'showName', ...)
+     * array('name' => 'Jméno', 'surname' => 'Příjmení', ...)
+     * 
+     * @var array $tableConfig 
+     */
+    protected $tableConfig = array(
+        'jednotka' => 'Jednotka',
+        'popis' => 'Popis'
+    );
+
+    /**
+     * zavola rodicovsky konstruktor a nastavi repozitar a tabli, nad kterou funguje
+     * 
+     * @param Repository $repo
+     */
+    public function __construct(Repository $repo) {
+        parent::__construct();
+        
+        $this->repo = $repo;
+    }
+
+    //=================================== PROTECTED ============================
+
+    /**
+     * UomForm factory.
+     * @return Form
+     */
+    protected function createComponentCrudForm() {
+        #-- form (dynamicky - dle akce)
+        $form = new Form;
+        $form->addProtection('Odešlete formulář znovu prosím (bezpečtnostní token vypršel).');
+
+        #-- buttons
+        // tlacitka dame jiz tady, protoze kdyz nejsou ve skupine, padnou pekne
+        // az na konec ;)
+        $form->addSubmit('ok', 'Uložit');        
+        $form->addButton('cancel', 'Storno')
+                ->setOmitted(true)
+                ->getControlPrototype()
+                ->onclick('window.location=\'' . $this->presenter->link("default") . '\';')
+                ->addClass('btn-default');
+
+        #-- pridame inputy dle akce
+        if ($this->presenter->getAction() !== 'add') {
+            $form->addHidden('id');
+        }
+
+        #-- cely form
+        $form->addGroup("firstgroup")->setOption('label', 'Základní údaje');
+        $form->addText('jednotka', 'Název jednotky:')
+                ->setType('text')
+                ->setRequired('Zadejte název měrné jednotky.');        
+        
+        $form->addTextArea('popis', 'Popis:');
+
+        #-- handlers functions
+        $form->onSuccess[] = array($this, 'successForm');
+
+        #-- groups toogle
+        $this->setGroupsToggle($form);
+
+        #-- bootstrap it
+        return $this->boostrapIt($form);
+    }
+
+}

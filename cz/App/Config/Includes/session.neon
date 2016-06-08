@@ -1,0 +1,8 @@
+# nastaví platnost na všechny subdomény
+#session:
+#    cookiePath: '/'
+#    cookieDomain: '.example.com'
+
+session:
+    autoStart: true
+    expiration: 14 days

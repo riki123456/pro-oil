@@ -1,0 +1,20 @@
+constants:
+    GOOGLE_ANALYTICS: false
+    ZBOZI_ANALYTICS: false
+    HEUREKA_ANALYTICS: false
+    HEUREKA_OVERENO_ZAKAZNIKY: false
+
+services:
+    cacheStorage:
+       class: Nette\Caching\Storages\DevNullStorage
+
+parameters:
+
+database:
+    dsn: 'mysql:host=127.0.0.1;dbname=pro-oil'
+    user: 'pro-oil'
+    password: 'pro-oil'
+    debugger: true  # debugger bar panel
+    explain: true   # explain queries in debugger bar
+    options:
+        lazy: yes

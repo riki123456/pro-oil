@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html lang="{constant("LANG")}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="{ifset $metaDescription} {$metaDescription} {else} Společnost Pro-Oil se zabývá prodejem a distribucí kvalitních značkových motorových, převodových olejů pro osobní i nákladní vozy za přijatelné ceny. Známé trh s oleji a mazivy.{/ifset}">
+        <meta name="keywords" content="{ifset $metaKeywords} {$metaKeywords} {else} castrol,mol,mogul,motor,olej,oil,vozy,vůz,osobní,auto,mineralni,5w,10w,15w,api,sae,levný,levně,kvalitní{/ifset}">
+        <meta name="author" content="RNDr. Miroslav Petráš, petras.miroslav@email.cz, www.rksystem.cz">
+        <link rel="shortcut icon" href="{constant('ROOT_WEB_WWW')}/favicon.png" type="image/x-icon">
+    </head>
+    <body>
+        <h2>Dobrý den,</h2>
+        <p>děkujeme vám za zaslání objednávky č. {$dataZakaznik->objednavka_hlavicka->ciselna_rada}. V co nejkratší době bude vyřízená a expedována.</p>
+        <p>Níže následuje její shrnutí.</p><br/>
+
+        <table width="95%">
+            {include '_cart-table-polozky.latte'}
+            {include '_cart-table-doprava.latte'}    
+
+            {if '' != $dataZakaznik->objednavka_hlavicka->note}
+                <tr>
+                    <td><b>Poznámka</b></td>
+                    <td colspan="5">{$dataZakaznik->objednavka_hlavicka->note}</td>
+                </tr>
+                <tr><td colspan="6">&nbsp;</td></tr>
+            {/if}
+
+            {include '_cart-table-rekapitulace.latte'}                       
+        </table>
+
+        {include '_cart-table-zakaznik.latte'}
+
+        <p>
+            S pozdravem a přáním příjemného dne Váš prodejce olejů a maziv Pro-Oil Morava s.r.o.<br/>
+            <a href="http://www.{constant("DOMAIN")}">http://www.{constant("DOMAIN")}</a><br/>
+            Tel.: {constant("MAIL_TELEFON")}<br/>
+            E-mail: <a href="mailto:{constant("MAIL_OBJEDNAVKY")}">{constant("MAIL_OBJEDNAVKY")}</a><br/>
+        </p>
+    </body>
+</html>

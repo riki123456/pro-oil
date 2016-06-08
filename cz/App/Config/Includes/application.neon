@@ -1,0 +1,6 @@
+application:
+    debugger: true # panel do Laděnky
+    catchExceptions: %productionMode%
+    errorPresenter: Front:Error
+    mapping:
+        *: App\Modules\*\Presenters\*Presenter

@@ -1,0 +1,46 @@
+# Apache configuration file (see httpd.apache.org/docs/current/mod/quickreference.html)
+
+# disable directory listing
+<IfModule mod_autoindex.c>
+        Options -Indexes
+</IfModule>
+
+# enable cool URL
+<IfModule mod_rewrite.c>
+        RewriteEngine On
+        # RewriteBase /
+
+        # xml
+  	RewriteRule ^robots.txt$ www/robots.txt [L]
+        RewriteRule ^sitemap.xml$ www/sitemap.xml [L]
+        RewriteRule ^zbozi.xml$ www/zbozi.xml [L]
+        RewriteRule ^heureka.xml$ www/heureka.xml [L]
+
+        # prevents files starting with dot to be viewed by browser
+        RewriteRule /\.|^\. - [F]
+
+        # front controller
+        RewriteCond %{REQUEST_FILENAME} !-f
+        #RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule !\.(pdf|js|ico|gif|jpg|png|css|rar|zip|tar\.gz|map)$ www/index.php [L]
+</IfModule>
+
+<IfModule mod_deflate.c>
+    SetOutputFilter DEFLATE
+
+    # Don't compress binaries
+    SetEnvIfNoCase Request_URI .(?:exe|t?gz|zip|iso|tar|bz2|sit|rar) no-gzip dont-vary
+    # Don't compress images
+    SetEnvIfNoCase Request_URI .(?:gif|jpe?g|jpg|ico|png)  no-gzip dont-vary
+    # Don't compress PDFs
+    SetEnvIfNoCase Request_URI .pdf no-gzip dont-vary
+    # Don't compress flash files (only relevant if you host your own videos)
+    SetEnvIfNoCase Request_URI .flv no-gzip dont-vary
+
+    <IfModule mod_headers.c>
+      # Make sure proxies don't deliver the wrong content
+      Header append Vary User-Agent env=!dont-vary
+    </IfModule>
+</IfModule>
+
+
