@@ -8,7 +8,11 @@
 # enable cool URL
 <IfModule mod_rewrite.c>
         RewriteEngine On
+            
+        # pro .sk domenu
+	RewriteCond %{HTTP_HOST} .*\.sk [NC]
+	RewriteRule ^(.*)$ "/sk/$1" [L]
 
-	RewriteCond %{HTTP_HOST} .*\.cz [NC]
-	RewriteRule ^(.*)$ cz/index.php [L]
+        # pro ostatni domeny vzdy na /cz/
+        RewriteRule ^(.*)$ "/cz/$1" [L]
 </IfModule>

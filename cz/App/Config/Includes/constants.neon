@@ -16,10 +16,10 @@ constants:
     DB_PREFIX: rk_
 
     ROOT_FS_WWW: %wwwDir%
-    ROOT_WEB_WWW: /cz/www
+    ROOT_WEB_WWW: /www
 
     TINY_MCE_CLASS: tinyMCE
-    TINY_MCE_BASEURL: /cz/www/media/tinymce
+    TINY_MCE_BASEURL: /www/media/tinymce
 
     IMAGE_SIZE_LARGE_WIDTH: 600
     IMAGE_SIZE_LARGE_HEIGHT: 800

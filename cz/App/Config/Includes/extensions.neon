@@ -2,7 +2,7 @@ extensions:
     webloader: WebLoader\Nette\Extension()
 
 services:
-    wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%, '/cz/www')
+    wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%, '/www')
 
 webloader:
     css:
