@@ -1,0 +1,107 @@
+DODELAT FUNKCIONALITU
+--- kdyz ulozim, tak at se mi ukaze radek tabulky s polozkou, kterou jsem zrovna ulozil
+
+DODELAT NASTAVENI NA heureka.cz
+    -- ktery popis chceme nahravat?
+    -- implementace kodu mereni
+    -- overeno zakazniky
+    -- nastaveni doprav, cen, adres apod. .... tag <DELIVERY>
+
+    -- info o kreditu ... nejak prichazi nebo ne? ... ted nejsme v katalogu
+        --- co je tohle za kategorii: Auto-moto | Náplně a kapaliny | Maziva (je natvrdo v .csv, kterym se importovaly polozky)? <CATEGORY>
+
+<PRODUCTNAME> <!-- sekce heureky "Auto-Moto | Mazivá" -->
+Výrobce | Řada | Typ | Objem - Castrol EDGE 5W-30 5l <!-- priklad ... -->
+</PRODUCTNAME>
+
+======================================================
+
+DODELAT NASTAVENI NA zbozi.cz
+    -- ktery popis chceme nahravat?
+    -- implementace kodu mereni
+    -- overeno zakazniky
+    -- nastaveni doprav, cen, adres apod. .... tag <DELIVERY>
+    -- info o kreditu ... nejak prichazi nebo ne? ... ted nejsme v katalogu
+        --- co je tohle za kategorii: Auto-moto | Náplně a kapaliny | Maziva (je natvrdo v .csv, kterym se importovaly polozky)? <CATEGORY>
+
+
+99999. nejaky ten mail po potvrzeni objednavky ??? (viz. text dole)
+
+$mailtext = '
+      DobrĂ˝ den,<br/>
+      VaĹˇe objednĂˇvka byla potvrzena.<br/>
+      <br/>
+      <strong>ZpĹŻsob odbÄ›ru:</strong> '.$user['postage'].'<br/>
+      <br/>
+      '.$mail['items'].'<br/> 
+      <br/>
+      S pozdravem a pĹ™ĂˇnĂ­m pĹ™Ă­jemnĂ©ho dne VĂˇĹˇ prodejce olejĹŻ a maziv Pro-Oil Morava s.r.o.<br/>
+      www.pro-oil.cz<br/>
+      Tel.: +420 737 283 982<br/>
+      E-mail: prikryl@pro-oil.cz<br/>
+    ';
+
+DODELAVKY
+--------------
+prihlaseni a registrace -> zatim jsem smazal z menu (ve front) ... ale dodelat !!
+obchodni podminky --- co ta barva u nekterych textu ... neni to nejak povinne??
+
+http://pro-oil.local:1000/admin/items/?_fid=500e
+ -- nacitat nejak lepe, nez proste vse ... je to strasne pomale :((
+
+http://pro-oil.local:1000/admin/items/add
+    -- bug: pri nevyplneni pole "cena za baleni" se mi neobarvi error inputy
+            -- az kdyz jim dam focus a pak odejdu. Pak jsou obervene jako error
+            -- asi je to tim, jak je skladam a nejak spatne se to vyhodnocuje :( ...
+
+
+NASTAVENI NA OSTREM
+======================
+- cron
+
+
+
+===================== OK :)) =============================================
+1. potvrzeni objednavky jenom "mamce" ---- upravil jsem uvodni text, at jde videt, ze jeste prijde potvrzeni --- OK
+2. do objednavek uz insertovat veci jen jako string (kdyz zmenim treba dopravu, at mi v objednavkach zustane stara cena) --- OK
+3. doprava a platba => "postovna a balne" ... a zatim shrnuti ceny (145 kc s dph) ------------- OK
+4. prehodit ceny v souhrnu objednavky - nejdriv 'bez DPH', pak 's DPH' ------------------------- OK                                          
+5. CELKOVOU cenu zaokrouhlit nahoru na cele koruny (a napsat, ze zaokrouhleno) ----------------- OK
+6. dotaz na prodejce posilat na fojtik a kancelar (mail) --------------------------------------- OK
+97. pri prihlaseni do admina me to nepresmeruje na pozadovanou stranku (po login) -------------- OK
+99. mail nam neprisel :( ...  ----------------- OK
+
+
+99a. upravit admin menu ... at je nejake hezci :)   ------------ OK
+     --- nacitat do tinyMce nejak styly ------------------------ OK
+
+
+
+
+
+100. CRON -> vsechny tyto skripty pujdou spustit i rucne z admina !!
+     - skript pro vytvoreni "resize" obrazku (+ musim pridat watermark ...) --- OK
+     - skript na generovani xml pro zbozi.cz apod. --- OK
+
+
+
+
+
+
+
+
+
+
+
+
+
+CO JESTE UDELAT 
+=======================
+1. na ostrem nefunguje moje error stranka !!!   ---- OK
+
+2. udelat nejakeho rodice pro generovani formu? A mit v ramci nej i bootstrapIt() a toggleIt() ?
+
+
+
+
+- dodelat do tinymce filemanagera

@@ -1,0 +1,98 @@
+<form class="form-horizontal" id="form-search" action="{plink Default:itemsSearch}">
+    <input type="hidden" name="do" value="itemsControl-itemsSearch" />
+    
+    <!-- .input-group -->
+    <div class="input-group" id="input-search">
+        <input type="text" name="s-nazev" value={$defVal['s-nazev']} class="form-control" placeholder="Klikni zde a najdi si olej do svého vozu">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" data-toggle="tooltip" data-placement="auto" title="Spustit vyhledávání" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </span>
+    </div>
+    <!-- /.input-group -->
+    
+    <div id="form-search-expanded">
+        <div class="form-group">
+            <a class="pull-right" id="form-search-expanded-close" href="javascript:void(0);">zavřít <span class="fa fa-close"></span></a>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-sm-3">
+                <div class="control-label small">
+                    <label for="s-kategorie">Kategorie:</label>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <select name="s-kategorie" id="s-kategorie" class="form-control">
+                    <option value="">-- vyber --</option>
+                    {foreach $kategorie as $k}
+                        <option value="{$k->id}" {if $k->id == $defVal['s-kategorie']} selected="selected" {/if}>{$k->nazev}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-3">
+                <div class="control-label small">
+                    <label for="s-vyrobce">Výrobce:</label>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <select name="s-vyrobce" class="form-control">
+                    <option value="">-- vyber --</option>
+                    {foreach $vyrobce as $v}
+                        <option value="{$v->id}" {if $v->id == $defVal['s-vyrobce']} selected="selected" {/if}>{$v->nazev}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-3">
+                <div class="control-label small">
+                    <label for="s-sae">Norma - SAE:</label>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" name="s-sae" value="{$defVal['s-sae']}" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-3">
+                <div class="control-label small">
+                    <label for="s-api">Norma - API:</label>
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" name="s-api" value="{$defVal['s-api']}" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-3">
+                <div class="control-label small">
+                    <label for="s-acea">Norma - ACEA:</label>
+
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" name="s-acea" value="{$defVal['s-acea']}" class="form-control">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-3">
+                <div class="control-label small">
+                    <label for="s-norma-vyrobce">Norma - výrobce:</label>
+
+                </div>
+            </div>
+            <div class="col-sm-9">
+                <input type="text" name="s-norma-vyrobce" value="{$defVal['s-norma-vyrobce']}" class="form-control">
+            </div>
+        </div>
+    </div>
+</form>

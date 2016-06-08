@@ -1,0 +1,24 @@
+<!-- SCRIPT FILES -->
+{block scriptsFiles}
+
+{control js}
+{control jsDynamic}
+
+{/block}
+<!-- /SCRIPT FILES -->
+
+<!-- SCRIPTS -->
+{block scripts}{/block}
+
+<script type="text/javascript">
+    $(function () {
+        setTimeout(function () {
+            if ($("#Loading_Container").length > 0)
+                $("#Loading_Container").remove();
+        }, 250);
+    });
+</script>
+<!-- /SCRIPTS -->
+
+</body>
+</html>

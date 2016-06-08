@@ -1,0 +1,19 @@
+{* nejdrive si vyrenderujeme content. tim ziskame pripadna data z komponent *}
+{capture $content}
+    <div>{include content}</div>
+{/capture}
+
+{include '../../Base/Templates/Layouts/top.latte'}
+
+<div class="container">
+    <!-- Flash messages - from admin module -->  
+        {include '../../Admin/templates/Components/messages-flash.latte'|strip}                    
+    <!-- /Flash messages -->
+
+    <!-- Page Content -->
+    {! $content}    
+    <!-- /Page Content -->
+</div>
+<!-- /#wrapper -->
+
+{include '../../Base/Templates/Layouts/bottom.latte'}

@@ -1,0 +1,50 @@
+{* nejdrive si vyrenderujeme content. tim ziskame pripadna data z komponent *}
+{capture $content}
+    <div>{include content}</div>
+{/capture}
+
+{include '../../Base/Templates/Layouts/top.latte', 'googleUniversalAnalytics' => constant("GOOGLE_ANALYTICS")|noescape}
+
+<!-- Navigation -->
+{include Components/navigation.latte|strip}
+<!-- /Navigation -->
+
+<div class="container container-front">
+    {include Components/navigation-sub.latte}
+
+    <!-- .row -->
+    <div class="row">
+        <!-- .col -->
+        <div class="col-sm-3">
+            <!-- Navigation sub - search and shop basket -->
+            {include Components/navigation-sidebar.latte|strip}
+            <!-- /Navigation -->
+        </div>
+        <!-- /.col -->
+
+        <!-- .col -->
+        <div class="col-sm-7">
+            <!-- Flash messages -->  
+            {include Components/messages-flash.latte|strip}                    
+            <!-- /Flash messages -->
+
+            {include Components/navigation.breadcrumb.latte}
+
+            {! $content}
+        </div>
+        <!-- /.col -->
+
+        <!-- .col -->
+        <div class="col-sm-2 rightbar">
+            {block rightbar}{/block}            
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+<div class="container-fluid" id="footer">
+    {include Components/footer.latte}
+</div>
+
+{include '../../Base/Templates/Layouts/bottom.latte'}

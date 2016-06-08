@@ -1,0 +1,47 @@
+form legend:hover { color: @link-color; }
+
+.page-header { margin: (@line-height-computed) 0 @line-height-computed; }
+
+.alert { margin-bottom: 0; }
+
+.sidebar ul li.divider { border-bottom: 1px solid @light-link-color; }
+
+.navbar-default { border-color: @light-link-color; }
+
+/** table thead background color */
+.table-default {border-color: @panel-default-border;} 
+.table-default thead tr {border-color: @panel-default-border;}
+.table-default thead tr th { color: @panel-default-text; background-color: @panel-default-heading-bg;}
+
+.table-primary {border-color: @panel-primary-border;} 
+.table-primary thead tr {border-color: @panel-primary-border;}
+.table-primary thead tr th { color: @panel-primary-text; background-color: @panel-primary-heading-bg;}
+
+.table-success {border-color: @panel-success-border;} 
+.table-success thead tr {border-color: @panel-success-border;}
+.table-success thead tr th { color: @panel-success-text; background-color: @panel-success-heading-bg;}
+
+.table-info {border-color: @panel-info-border;} 
+.table-info thead tr {border-color: @panel-info-border;}
+.table-info thead tr th { color: @panel-info-text; background-color: @panel-info-heading-bg;}
+
+.table-warning {border-color: @panel-warning-border;} 
+.table-warning thead tr {border-color: @panel-warning-border;}
+.table-warning thead tr th { color: @panel-warning-text; background-color: @panel-warning-heading-bg;}
+
+.table-danger {border-color: @panel-danger-border;} 
+.table-danger thead tr {border-color: @panel-danger-border;}
+.table-danger thead tr th { color: @panel-danger-text; background-color: @panel-danger-heading-bg;}
+
+.nav-tabs { margin-bottom: 0; }
+.tab-pane.tab-pane-default {
+    border-left: 1px solid @panel-default-border;
+    border-right: 1px solid @panel-default-border;
+    border-bottom: 1px solid @panel-default-border;
+    border-radius:  0px 0px @border-radius-base @border-radius-base;
+    padding: @padding-base-vertical @padding-base-horizontal;
+}
+.nav-tabs.nav-tabs-default > li > a { background: /*#DADADA*/ @nav-tabs-active-link-hover-bg; border-bottom: 1px solid @panel-default-border; }
+.nav-tabs.nav-tabs-default > li > a:hover { background: @nav-tabs-link-hover-border-color;}
+.nav-tabs.nav-tabs-default > li.active > a,
+.nav-tabs.nav-tabs-default > li.active > a:hover { background: @nav-tabs-link-hover-border-color;}

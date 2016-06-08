@@ -1,0 +1,32 @@
+<div class="sidebar-nav">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand">Kategorie</span>
+        </div>
+        <div class="navbar-collapse collapse sidebar-navbar-collapse">
+            <ul class="nav navbar-nav">
+                {foreach $sidebarMenu as $kategorie_arr}
+                    {var $k = $kategorie_arr['kategorie']}
+                    
+                    {if $k->display == 1}
+                        <li><a n:href="Default:items $k->alias">{$k->nazev}</a></a>
+                            <ul class="nav nav-second-level navbar-nav collapse">
+                                {foreach $kategorie_arr['vyrobce'] as $v}
+                                    <li><a n:href="Default:items $k->alias, $v->alias">
+                                            {$v->nazev}
+                                        </a>
+                                    </li>
+                                {/foreach}
+                            </ul>
+                        {/if}
+                    {/foreach}
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>

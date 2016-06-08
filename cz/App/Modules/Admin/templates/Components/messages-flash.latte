@@ -1,0 +1,21 @@
+{if $flashes}
+    <div class="row">
+        <div class="col-md-12">
+            {foreach $flashes as $flash}
+                <div class="alert alert-{$flash->type}">
+                    <div style="float: left; width: 90%;">{$flash->message|noescape}</div>
+                    <div>
+                        {if $flash->type == constant("FLASH_OK")}<span class="pull-right fa fa-check-circle fa-size-1a5x"></span>
+                        {elseif $flash->type == constant("FLASH_ERR")}<span class="pull-right fa fa-times-circle fa-size-1a5x"></span>
+                        {elseif $flash->type == constant("FLASH_INFO")}<span class="pull-right fa fa-info-circle fa-size-1a5x"></span>
+                        {elseif $flash->type == constant("FLASH_WARN")}<span class="pull-right fa fa-exclamation-circle fa-size-1a5x"></span>
+                        {/if}
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+            {/foreach}
+        </div>
+        <!-- /.col-md-12 -->
+    </div>
+    <!-- /.row -->
+{/if}

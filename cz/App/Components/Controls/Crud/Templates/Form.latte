@@ -1,0 +1,14 @@
+<div class="panel panel-default">
+    <div class="panel-body komponent">
+        {ifset $formValues}
+            {if $formValues == false}
+                <div class="alert alert-{(FLASH_ERR)}">Stránka nebyla nalezena!</div>
+                <a href="{plink default}">Zpět na hlavní stránku</a>
+            {else} 
+                {control crudForm}
+            {/if}
+        {else}
+            {control crudForm}
+        {/ifset}
+    </div>
+</div>

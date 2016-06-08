@@ -1,0 +1,8 @@
+database:
+    dsn: 'mysql:host=sql10.web4u.cz;dbname=rksystem'
+    user: 'rksystem'
+    password: 'sdq7inz1'
+    debugger: true  # debugger bar panel
+    explain: true   # explain queries in debugger bar
+    options:
+        lazy: yes

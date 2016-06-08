@@ -1,0 +1,9 @@
+parameters:
+    modules: 
+        # cesty k hlavni tride modulu, dedi od App\Modules\Base
+        # spousti ruzne globalni akce nad modulem (pro kazdy modul jine)
+        - App\Modules\Admin
+        - App\Modules\Front
+        #- Front
+        #submodules:
+        #    - Export

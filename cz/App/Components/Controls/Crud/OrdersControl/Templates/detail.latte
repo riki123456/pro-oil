@@ -1,0 +1,171 @@
+<div class="panel panel-default">    
+    <div class="panel-body komponent small">
+        <div class="row">
+            <div class="col-md-12">
+                {if count($dataZakaznik) > 0 }
+                    {var $_stavObj = $dataZakaznik->objednavka_hlavicka->stav}
+
+                    <b>Stav objednávky:</b> {($_stavObj == 1) ? 'nová' : (($_stavObj == 2) ? 'schválená' : 'zamítnutá')}
+                    <div class="btn-group pull-right">
+                        <a n:href="changeType! $dataZakaznik->objednavka_hlavicka_id, 2" 
+                           class="btn btn-success {($_stavObj == 2) ? 'disabled' : ''}" role="button"
+                           data-confirm="modal"
+                           data-confirm-title="Potvrzení"
+                           data-confirm-text="Opravdu chcete SCHVÁLIT tuto objednávku?"
+                           data-confirm-ok-class="btn-primary"
+                           data-confirm-ok-text="Ano"
+                           data-confirm-cancel-class="btn-default"
+                           data-confirm-cancel-text="Ne"
+                           ><span class="fa fa-check"></span> schválit</a>
+                        <a n:href="changeType! $dataZakaznik->objednavka_hlavicka_id, 3" 
+                           class="btn btn-danger {($_stavObj == 3) ? 'disabled' : ''}"
+                           data-confirm="modal"
+                           data-confirm-title="Potvrzení"
+                           data-confirm-text="Opravdu chcete ZAMÍTNOUT tuto položku?"
+                           data-confirm-ok-class="btn-primary"
+                           data-confirm-ok-text="Ano"
+                           data-confirm-cancel-class="btn-default"
+                           data-confirm-cancel-text="Ne"
+                           ><span class="fa fa-remove"></span> zamítnout</a>
+                    </div>
+                {/if}
+            </div>
+        </div>
+
+        <hr />
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dataTable_wrapper table-responsive">
+                    <table class="table table-bordered table-condensed table-primary">
+                        <thead>
+                            <tr><th>Typ uživatele</th><th>Je plátce DPH</th><th>Firma</th><th>IČO</th><th>DIČ</th><th>Způsob odběru</th><th>Poštovné</th></tr>
+                        </thead>
+                        <tbody>
+                            {if count($dataZakaznik) > 0 }
+                                <tr>
+                                    <td>{($dataZakaznik->user_type == 1) ? 'Koncový zákazník' : (($dataZakaznik->user_type == 2) ? 'Fyzická osoba' : 'Právnická osoba')}</td>
+                                    <td>{($dataZakaznik->platce_dph == 1) ? 'ANO' : 'NE'}</td>
+                                    <td>{$dataZakaznik->firma}</td>
+                                    <td>{$dataZakaznik->ico}</td>
+                                    <td>{$dataZakaznik->dic}</td>
+                                    <td>
+                                        {if '' != $dataZakaznik->objednavka_hlavicka->doprava_nazev}
+                                            {$dataZakaznik->objednavka_hlavicka->doprava_nazev}, cena: 
+                                            <span class="small">
+                                                {$dataZakaznik->objednavka_hlavicka->doprava_cena_bez_dph|money: 'Kč'} bez DPH,
+                                            </span>
+                                            {$dataZakaznik->objednavka_hlavicka->doprava_cena_s_dph|money: 'Kč'} s DPH
+                                        {/if}
+                                    </td>
+                                    <td>
+                                        {if '' != $dataZakaznik->objednavka_hlavicka->platba_nazev}
+                                            {$dataZakaznik->objednavka_hlavicka->platba_nazev}, cena: 
+                                            <span class="small">
+                                                {$dataZakaznik->objednavka_hlavicka->platba_cena_bez_dph|money: 'Kč'} bez DPH,
+                                            </span>
+                                            {$dataZakaznik->objednavka_hlavicka->platba_cena_s_dph|money: 'Kč'} s DPH
+                                        {/if}
+                                    </td>
+                                </tr>
+                                {if '' != $dataZakaznik->objednavka_hlavicka->note}
+                                    <tr>
+                                        <td><b>Poznámka zákazníka</b></td>
+                                        <td colspan="6">{$dataZakaznik->objednavka_hlavicka->note}</td>
+                                    </tr>
+                                {/if}
+                            {else}
+                                <tr><td colspan="7">&nbsp;</tr>
+                            {/if}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                {if (false != $dataAdresaFakturacni)}
+                    <div class="dataTable_wrapper table-responsive">
+                        <table class="table table-bordered table-condensed table-default">
+                            <thead><tr><th colspan="2">Adresa - fakturační</th></tr></thead>
+                            <tbody>
+                                <tr><td>Jméno a příjmení:</td><td>{$dataAdresaFakturacni->jmeno|trim} {$dataAdresaFakturacni->prijmeni|trim}</td></tr>
+                                <tr><td>Email:</td><td>{$dataAdresaFakturacni->email}</td></tr>
+                                <tr><td>Telefon:</td><td>{$dataAdresaFakturacni->telefon}</td></tr>
+                                <tr>
+                                    <td>Adresa:</td>
+                                    <td>
+                                        {$dataAdresaFakturacni->ulice}, {$dataAdresaFakturacni->mesto}, {$dataAdresaFakturacni->psc}, {$dataAdresaFakturacni->stat}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {/if}
+            </div>
+            <div class="col-md-6">
+                {if (false != $dataAdresaDodaci)}
+                    <div class="dataTable_wrapper table-responsive">
+                        <table class="table table-bordered table-condensed table-default">
+                            <thead><tr><th colspan="2">Adresa - dodací</th></tr></thead>
+                            <tbody>
+                                <tr><td>Jméno a příjmení:</td><td>{$dataAdresaFakturacni->jmeno|trim} {$dataAdresaFakturacni->prijmeni|trim}</td></tr>
+                                <tr><td>Email:</td><td>{$dataAdresaFakturacni->email}</td></tr>
+                                <tr><td>Telefon:</td><td>{$dataAdresaFakturacni->telefon}</td></tr>
+                                <tr>
+                                    <td>Adresa:</td>
+                                    <td>
+                                        {$dataAdresaFakturacni->ulice}, {$dataAdresaFakturacni->mesto}, {$dataAdresaFakturacni->psc}, {$dataAdresaFakturacni->stat}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {/if}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="dataTable_wrapper table-responsive">
+                    <table class="table table-bordered table-condensed table-primary">
+                        <thead>
+                            <tr><th>Název</th><th>MJ</th><th>Počet</th><th>Dostupnost</th><th>Cena/ks (s DPH)</th><th>Cena celkem (s DPH)</th></tr>
+                        </thead>
+                        <tbody>
+                            {var $cena_celkem_s_dph = 0}
+                            {var $cena_celkem_bez_dph = 0}
+                            {foreach $data as $d}
+                                <tr>
+                                    <td>{$d->ora_polozka_nazev}</td>
+                                    <td>{$d->ora_polozka_baleni_pocet}{$d->ora_polozka_baleni_mj}</td>
+                                    <td>{$d->ora_pocet}</td>
+                                    <td>{$d->ora_polozka_dostupnost}</td>
+                                    <td>{$d->ora_cena_s_dph|money: 'Kč'}</td>
+                                    <td>{$d->ora_pocet * $d->ora_cena_s_dph|money: 'Kč'}</td>
+                                </tr>
+                                {var $cena_celkem_s_dph = $cena_celkem_s_dph + ($d->ora_pocet * $d->ora_cena_s_dph)}
+                                {var $cena_celkem_bez_dph = $cena_celkem_bez_dph + ($d->ora_pocet * $d->ora_cena_bez_dph)}
+                            {/foreach}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <i style="font-size: 0.8em;">Výpočet ceny celkem: součet <u>cen celkem s dph</u> za řádky + <u>poštovné s dph</u></i><br/>
+                                    <i style="font-size: 0.8em;">Cena celkem je zaokrouhlená na celé koruny nahoru.</i>
+                                </td>
+                                <td>
+                                    <b style="font-size: 0.8em;">
+                                        Celkem: {round($cena_celkem_bez_dph + $dataZakaznik->objednavka_hlavicka->platba_cena_bez_dph + $dataZakaznik->objednavka_hlavicka->doprava_cena_bez_dph)|money: 'Kč'} (bez DPH)
+                                    </b><br/>
+                                    <b>Celkem: {round($cena_celkem_s_dph+ $dataZakaznik->objednavka_hlavicka->platba_cena_s_dph + $dataZakaznik->objednavka_hlavicka->doprava_cena_s_dph)|money: 'Kč'} (s DPH)</b>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

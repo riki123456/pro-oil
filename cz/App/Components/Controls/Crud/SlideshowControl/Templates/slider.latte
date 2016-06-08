@@ -1,0 +1,13 @@
+<ul class="rslides margin-bottom">
+    {foreach $slides as $slide}
+        <li>
+            {if empty($slide->link)}
+                <img src="{constant('ROOT_WEB_WWW')}/images/slideshow/{$slide->img}" />
+            {else}
+                <a href="{$slide->link}">
+                    <img src="{constant('ROOT_WEB_WWW')}/images/slideshow/{$slide->img}" />
+                </a>
+            {/if}
+        </li>
+    {/foreach}
+</ul>

@@ -1,0 +1,46 @@
+<!-- adresy -->
+{var $adresy = array($dataAdresaFakturacni, $dataAdresaDodaci)}
+
+{capture $a}
+    <tr>
+        {foreach $adresy as $adr}
+            {if (false != $adr)}
+                <td>Jméno a příjmení:</td><td>{$adr->jmeno|trim} {$adr->prijmeni|trim}</td>
+            {else}
+                <td colspan="2">&nbsp;</td>
+            {/if}
+        {/foreach}
+    </tr>
+    <tr>
+        {foreach $adresy as $adr}
+            {if (false != $adr)}
+                <td>Email:</td><td>{$adr->email}</td>
+            {else}
+                <td colspan="2">&nbsp;</td>
+            {/if}
+        {/foreach}
+    </tr>
+    <tr>
+        {foreach $adresy as $adr}
+            {if (false != $adr)}
+                <td>Telefon:</td><td>{$adr->telefon}</td>
+            {else}
+                <td colspan="2">&nbsp;</td>
+            {/if}
+        {/foreach}
+    </tr>
+    <tr>
+        {foreach $adresy as $adr}
+            {if (false != $adr)}
+                <td>Adresa:</td><td>{$adr->ulice}, {$adr->mesto}, {$adr->psc}, {$adr->stat}</td>
+            {else}
+                <td colspan="2">&nbsp;</td>
+            {/if}
+        {/foreach}
+    </tr>
+{/capture}
+
+<tr><td colspan="4">&nbsp;</td></tr>
+<tr><td colspan="2"><b>Adresa - fakturační</b></td><td colspan="2"><b>Adresa - dodací</b></td></tr>
+
+{! $a}

@@ -1,0 +1,21 @@
+{ifset $breadcrumb}
+    <div class="row">
+        <div class="col-md-12">
+            <hr/>
+            <ol class="breadcrumb">
+                {var $counter = 1, $barr = $breadcrumb->getBreadcrumb(), $barrCount = count($barr);}
+
+                {foreach $barr as $bindex => $barray}
+                    {if $counter == $barrCount}
+                        <li class="active">{$barray[1]}</li>
+                    {else}
+                        <li><a href="{$barray[0]}">{$barray[1]}</a></li>
+                    {/if}
+
+                    {var $counter = $counter+1;}
+                {/foreach}
+            </ol>
+            <hr/>
+        </div>
+    </div>
+{/ifset}
