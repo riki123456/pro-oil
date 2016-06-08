@@ -1,0 +1,59 @@
+<div class="row">
+    <h3>Děkujeme vám za zaslání objednávky</h3>
+    <p>
+        <br/>
+        Její shrnutí vám bylo zasláno na email: {$ordDataZakaznikAdresa->email}.
+        {if false != $ordDataZakaznikAdresaDodaci}
+            <br />
+            <i class="fa-size-0a8x">Na základě uvedené dodací adresy bylo shrnutí zasláno také na email: {$ordDataZakaznikAdresaDodaci->email}</i>
+        {/if}
+    </p>
+
+    {ifset $paymentClass}
+        <p>{$paymentClass->finish()}</p>
+    {/ifset}    
+    
+    <p>
+        <br/>
+        <a href="{plink Default:}" class="btn btn-primary"><span class="fa fa-angle-double-left"></span> Zpět na hlavní stránku obchodu</a>
+        <span class="pull-right">
+            {if constant("ZBOZI_ANALYTICS") == true}
+                <a href="http://www.zbozi.cz/obchod/38206/" title="Hodnocení obchodu na Zboží.cz">
+                    <img src="//d1.cdn.szn.cz/1/img/25/15/08/06/1/33/145x41_fNPng8.png" alt="Hodnocení obchodu na Zboží.cz" width="145" height="41" />
+                </a>
+            {/if}
+        </span>
+    </p>
+</div>
+
+{if constant("ZBOZI_ANALYTICS") == true}
+    <!-- zbozi.cz -> konverze -->
+    {var $_priceZ = (isset($ordData[0]->cena_s_dph)) ? $ordData[0]->cena_s_dph : 0}
+    {var $_idObjZ = (isset($ordData[0]->ciselna_rada)) ? $ordData[0]->ciselna_rada : 0}
+    <iframe src="http://www.zbozi.cz/action/38206/conversion?chsum=fqcZdFFmzolUWiUhO6ijBQ==&price={ceil($_priceZ)|noescape}&uniqueId={$_idObjZ|noescape}" 
+            frameborder="0" marginwidth="0" marginheight="0" scrolling="no" 
+            style="position:absolute; top:-3000px; left:-3000px; width:1px; height:1px; 
+            overflow:hidden;">                
+    </iframe>
+{/if}
+
+{if constant("HEUREKA_ANALYTICS") == true}
+    {var $_idObjH = (isset($ordData[0]->ciselna_rada)) ? $ordData[0]->ciselna_rada : 0}
+    <script type="text/javascript">
+        var _hrq = _hrq || [];
+            _hrq.push(['setKey', 'B01EE4C24A08EC9B331D333858758284']);
+            _hrq.push(['setOrderId', '{$_idObjH|noescape}']);
+            {foreach $ordData as $d}
+                {var $_nazev = htmlspecialchars($d->ora_polozka_nazev . ' ' . $d->ora_polozka_baleni_pocet . $d->ora_polozka_baleni_mj . ' ' . $d->ora_polozka_vyrobce_nazev)}
+                _hrq.push(['addProduct', '{$_nazev|noescape}', '{ceil($d->ora_cena_s_dph)|noescape}', '{$d->ora_pocet|noescape}']);            
+            {/foreach}
+                    
+            _hrq.push(['trackOrder']);
+
+        (function() {
+            var ho = document.createElement('script'); ho.type = 'text/javascript'; ho.async = true;
+            ho.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.heureka.cz/direct/js/ext/1-roi-async.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ho, s);
+        })();
+    </script>
+{/if}

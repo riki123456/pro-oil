@@ -1,0 +1,2 @@
+tracy:
+    email: ::constant(MAIL_ADMIN)

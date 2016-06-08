@@ -1,0 +1,34 @@
+{layout '../../../Base/Templates/@layout-simple.latte'}
+
+{var $mailAdmin = constant("MAIL_ADMIN")}
+
+{var $messages = array(
+    0 => array('Nastala výjimka', 'panel-danger', 'fa fa-close', 'Váš prohlížeč poslal žádost, kterou server nemůže zpracovat.'),
+    403 =>  array('Přístup zamítnut', 'panel-info', 'fa fa-info-circle', 'Na požadovanou stránku nemáte oprávnění.<br/><br/>Pokud si myslíte, že se jedná o chybu, kontaktujte prosím administrátora na adrese <a class="inverse" href="mailto:' . $mailAdmin . '.cz">' . $mailAdmin . '</a>'),
+    404 => array('Stránka nenalezena', 'panel-info', 'fa fa-info-circle', 'Stránka nebyla bohužel nalezena. Zkontrolujte si prosím, zda není adresa zadána špatně.<br/><br/>Pokud si myslíte, že se jedná o chybu, kontaktujte prosím administrátora na adrese <a class="inverse" href="mailto:' . $mailAdmin . '.cz">' . $mailAdmin . '</a>'),
+    405 => array('Metoda není povolena', 'panel-warning', 'fa fa-exclamation-triangle', 'Požadovaná metoda není na serveru povolena.'),
+    410 => array('Stránka nenalezena', 'panel-info', 'fa fa-info-circle', 'Stránka byla odstraněna ze serveru.'),
+    256 => array('Nastala výjimka', 'panel-danger', 'fa fa-close', 'Váš prohlížeč poslal žádost, kterou server nemůže zpracovat.'),
+    500 => array('Chyba serveru', 'panel-danger', 'fa fa-exclamation-triangle', 'Omlouváme se, ale na serveru došlo k vnitřní chybě a nemohl dokončit váš požadavek. Prosím zkuste akci zopakovat později.<br/><br/>Děkujeme.'),
+    512 => array('Nastala výjimka', 'panel-warning', 'fa fa-exclamation-triangle', 'Váš prohlížeč poslal žádost, kterou server nemůže zpracovat.')
+)}
+
+{var $message = isset($messages[$errorCode]) ? $messages[$errorCode] : $messages[0]}
+
+{block content} 
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        {*foreach $messages as $errCode => $message*}
+        <div class="panel {$message[1]|noescape}" style="margin-top: 35%;">
+            <div class="panel-heading"><h3><span class="{$message[2]|noescape}"></span> {$message[0]}</h3></div>
+            <div class="panel-body">
+                {$message[3]|noescape}
+            </div>
+            <div class="panel-footer small">ErrorCode: {$errorCode} 
+                <span class="pull-right"><a href="{link Default:}" class="fa-size-1a5x">Přejít na hlavní stránku</a></span>
+            </div>
+        </div>
+        {*/foreach*}
+    </div>
+</div>
+{/block}

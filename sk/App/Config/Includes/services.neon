@@ -1,0 +1,90 @@
+services:
+    imageStorage: 
+        class : App\Model\ImageStorage(::constant(ROOT_FS_WWW), ::constant(ROOT_WEB_WWW), /images)
+    repository: 
+        class : App\Model\Repositories\Repository
+    heurekaRequester:
+        class : App\Model\Heureka\Overeno\Requester
+
+    - App\Model\UserManager # IAuthenticator
+    - App\Model\Breadcrumb('main', '/', 'Hlavní strana')
+    - App\Model\Repositories\RepositoryOrders(@repository)   
+    - App\Model\Payment(@repository)
+    - App\Model\Heureka\Overeno(::constant(HEUREKA_API), ::constant(HEUREKA_SECRET_CODE), @heurekaRequester)
+
+    - App\Components\Forms\LoginForm\ILoginFormFactory #-- prihlaseni
+    - App\Components\Controls\LogoutControl\ILogoutControlFactory #-- odhlaseni
+    - App\Components\Controls\Crud\UsersControl\IUsersControlFactory #-- uzivatele
+    - App\Components\Controls\Crud\PagesControl\IPagesControlFactory #-- sprava html stranek
+    - App\Components\Controls\Crud\OrdersControl\IOrdersControlFactory #-- objednavky        
+    - App\Components\Controls\Crud\TransportsControl\ITransportsControlFactory #-- doprava
+    - App\Components\Controls\Crud\PaymentsControl\IPaymentsControlFactory #-- platby
+    - App\Components\Controls\Crud\ManufacturersControl\IManufacturersControlFactory #-- vyrobci
+    - App\Components\Controls\Crud\ContactsControl\IContactsControlFactory #-- kontakty
+    - App\Components\Controls\Crud\SlideshowControl\ISlideshowControlFactory #-- slideshow
+    - App\Components\Controls\Crud\ItemsControl\IItemsControlFactory #-- polozky
+    - App\Components\Controls\Crud\CategoriesControl\ICategoriesControlFactory #-- kategorie
+    - App\Components\Controls\Crud\AvailabilityControl\IAvailabilityControlFactory #-- dostupnost
+    - App\Components\Controls\Crud\UomControl\IUomControlFactory #-- merne jednotky
+    
+
+    - App\Components\Controls\CartControl\ICartControlFactory #-- shopping cart
+
+    cacheStorage:
+        class: Nette\Caching\Storages\FileStorage(%tempDir%/cache)
+
+    authorizator:
+        class: Nette\Security\Permission
+        setup:
+            - addRole(::constant(ROLE_GUEST)) # guest (default role)
+            - addRole(::constant(ROLE_REGISTERED), ::constant(ROLE_GUEST)) # logged user (frontend)
+            - addRole(::constant(ROLE_PARTNER), ::constant(ROLE_REGISTERED)) # as logger user, but also partner for business ;)
+            - addRole(::constant(ROLE_EDITOR), ::constant(ROLE_PARTNER)) # admin
+            - addRole(::constant(ROLE_ADMIN), ::constant(ROLE_EDITOR)) # admin
+            - addRole(::constant(ROLE_ROOT), ::constant(ROLE_ADMIN)) # root (the god ;) ...)
+
+            - addResource(Front:Default)
+            - addResource(Front:Error)
+            - addResource(Front:Cron)
+            - addResource(Admin:Default)
+            - addResource(Admin:Orders)
+            - addResource(Admin:Items)
+            - addResource(Admin:Users)
+            - addResource(Admin:Categories)
+            - addResource(Admin:Pages)
+            - addResource(Admin:Contacts)
+            - addResource(Admin:Slideshow)
+            - addResource(Admin:Transports)
+            - addResource(Admin:Manufacturers)
+            - addResource(Admin:Payments)
+            - addResource(Admin:Availability)
+            - addResource(Admin:Cron)
+            - addResource(Admin:Uom)
+
+
+            #-- guest (a ostatni, co od nej dedi
+            - allow(::constant(ROLE_GUEST), Front:Default, NULL)
+            - allow(::constant(ROLE_GUEST), Front:Error, NULL)
+            - allow(::constant(ROLE_GUEST), Front:Cron, NULL)
+            
+            #-- editor
+            - allow(::constant(ROLE_EDITOR), Admin:Default, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Orders, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Items, NULL)            
+            - allow(::constant(ROLE_EDITOR), Admin:Categories, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Pages, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Contacts, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Slideshow, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Transports, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Manufacturers, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Payments, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Availability, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Cron, NULL)
+            - allow(::constant(ROLE_EDITOR), Admin:Uom, NULL)
+
+
+            #-- admin (dedi od editor)
+            - allow(::constant(ROLE_ADMIN), Admin:Users, NULL)
+
+            #-- root (vse)
+            - allow(root, NULL)

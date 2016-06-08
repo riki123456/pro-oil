@@ -1,0 +1,57 @@
+<div class="panel panel-default">    
+    <div class="panel-body komponent small">
+        <div class="row">
+            <div class="col-md-12">
+                {if count($dataZakaznik) > 0 }
+                    {var $_stavObj = $dataZakaznik->objednavka_hlavicka->stav}
+
+                    <b>Stav objednávky:</b> {($_stavObj == 1) ? 'nová' : (($_stavObj == 2) ? 'schválená' : 'zamítnutá')}
+                    <div class="btn-group pull-right">
+                        <a n:href="changeType! $dataZakaznik->objednavka_hlavicka_id, 2" 
+                           class="btn btn-success {($_stavObj == 2) ? 'disabled' : ''}" role="button"
+                           data-confirm="modal"
+                           data-confirm-title="Potvrzení"
+                           data-confirm-text="Opravdu chcete SCHVÁLIT tuto objednávku?"
+                           data-confirm-ok-class="btn-primary"
+                           data-confirm-ok-text="Ano"
+                           data-confirm-cancel-class="btn-default"
+                           data-confirm-cancel-text="Ne"
+                           ><span class="fa fa-check"></span> schválit</a>
+                        <a n:href="changeType! $dataZakaznik->objednavka_hlavicka_id, 3" 
+                           class="btn btn-danger {($_stavObj == 3) ? 'disabled' : ''}"
+                           data-confirm="modal"
+                           data-confirm-title="Potvrzení"
+                           data-confirm-text="Opravdu chcete ZAMÍTNOUT tuto položku?"
+                           data-confirm-ok-class="btn-primary"
+                           data-confirm-ok-text="Ano"
+                           data-confirm-cancel-class="btn-default"
+                           data-confirm-cancel-text="Ne"
+                           ><span class="fa fa-remove"></span> zamítnout</a>
+                    </div>
+                {/if}
+            </div>
+        </div>
+
+        <hr />
+        <div class="row">
+            <div class="col-md-12 dataTable_wrapper table-responsive">
+                <table class="table table-bordered table-condensed table-primary">
+                    {include '_detail-table-polozky.latte'}
+                    {include '_detail-table-doprava.latte'}    
+
+                    {if '' != $dataZakaznik->objednavka_hlavicka->note}
+                        <tr>
+                            <td><b>Poznámka</b></td>
+                            <td colspan="5">{$dataZakaznik->objednavka_hlavicka->note}</td>
+                        </tr>
+                        <tr><td colspan="6">&nbsp;</td></tr>
+                    {/if}
+
+                    {include '_detail-table-rekapitulace.latte'}                       
+                </table>
+                
+                {include '_detail-table-zakaznik.latte'}
+            </div>
+        </div>
+    </div>
+</div>

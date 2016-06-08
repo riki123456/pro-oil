@@ -1,0 +1,23 @@
+{var $formContainers = array('baleni' => array('content' => '', 'rendered' => false, 'insideControls' => array('cena_bez_dph', 'baleni_pocet', 'baleni_mj')))}
+
+{capture $formContainers['baleni']['content']}
+    <div class="form-group">
+        <div class="col-sm-2 control-label {$crudForm->getComponent('cena_bez_dph')->control->isRequired() ? 'required' : ''}">
+            {$crudForm->getComponent('cena_bez_dph')->label}
+        </div>
+        <div class="col-sm-9">
+            <div class="input-group" style="width: 100%;">
+                {$crudForm->getComponent('cena_bez_dph')->control}
+                <input type="text" disabled="disabled" name="" style="width: 60px;" class="form-control" value="kč za">
+                
+                {$crudForm->getComponent('baleni_pocet')->control}
+                
+                {$crudForm->getComponent('baleni_mj')->control}
+
+            </div>
+        </div>
+    </div>
+{/capture}
+
+{*dump $formContainers*}
+{include '../../Templates/FormManually.latte', subContainersDefined => $formContainers}
