@@ -132,12 +132,12 @@ class CartControl extends Components\BaseControl {
         $fcol = $this->presenter->getComponent("jsDynamic")->getCompiler()->getFileCollection();
         $fcol->addFile(ROOT_FS_WWW . '/media/nette/live-form-validation.min.js');
         $fcol->addFile(__DIR__ . '/../Scripts/Form.js');
-        
+
         #-- vyrenderujeme
         $this->template->setFile(__DIR__ . '/Templates/cart-blank.latte');
         $this->template->render();
     }
-    
+
     /**
      * zpracovani objednavky
      */
@@ -202,8 +202,12 @@ class CartControl extends Components\BaseControl {
 
         #-- payment class - na zpracovani plateb tretich stran
         $this->paymentClass->setOrderData($ordDataFull);
-        $this->template->paymentClass = $this->paymentClass;
-
+        $this->template->paymentClassData = $this->paymentClass->processOrderData();
+        
+        if(null != $this->paymentClass->getPaymentResponseId()) {
+            $this->repo->update('objednavka_hlavicka', array('platba_servicesId' => $this->paymentClass->getPaymentResponseId()), 'id = ?', $this->template->ordData[0]->id);
+        }
+        
         #-- overeno zakazniky - heureka
         if (HEUREKA_OVERENO_ZAKAZNIKY == true) {
             try {
@@ -257,7 +261,7 @@ class CartControl extends Components\BaseControl {
                 foreach ($polozky as $item) {
                     $this->template->pocet += $item['pocet'];
                     $this->template->cena_s_dph = $item['cena_s_dph'];
-                    $this->template->cena_s_dph__celkem += $item['cena_s_dph'];
+                    $this->template->cena_s_dph__celkem += $item['cena_s_dph__celkem'];
                 }
             }
         }
@@ -291,9 +295,9 @@ class CartControl extends Components\BaseControl {
             $this->presenter->flashMessage('Email se nepodařilo odeslat. Zkuste prosím akci opakovat později.', FLASH_ERR);
 
             trigger_error($e->getMessage(), E_USER_WARNING);
-        }        
+        }
     }
-    
+
     /**
      * Zpracování formuláře - odeslani a ulozeni objednavky
      * Posila take informativni email
@@ -393,7 +397,7 @@ class CartControl extends Components\BaseControl {
         #-- return
         return $this->boostrapIt($form);
     }
-    
+
     /**
      * ZakaznikForm factory.
      * @return Form
@@ -420,7 +424,8 @@ class CartControl extends Components\BaseControl {
             $vychozi2 = $this->repo->findOneByColumn('platba', 'vychozi', 1);
 
             //mame patterny, ktere prelozime v po provedeni dotazu na html. Je to prasarna, ale alespon neprasime sql
-            $this->formRadio($form, 'platba_id', 'Platba', $vychozi2 == false ? 0 : $vychozi2->id, $this->replaceRadioPattern($pair));
+            $radio = $this->formRadio($form, 'platba_id', 'Platba', $vychozi2 == false ? 0 : $vychozi2->id, $this->replaceRadioPattern($pair));
+            $radio->getSeparatorPrototype()->addAttributes(array('class'=>'payment'));
         }
 
         #-- doprava
@@ -459,8 +464,8 @@ class CartControl extends Components\BaseControl {
         $form->addText("ulice", "Ulice, č. p.:")->setRequired('Zadejte ulici');
         $form->addText("mesto", "Město:")->setRequired('Zadejte město');
         $form->addText("psc", "PSČ:")->setRequired('Zadejte psč');
-        $form->addSelect('stat', 'Stát:', $this->repo->getPairs('stat', 'id', 'nazev', 'nazev'))
-                ->setPrompt('-- vyberte stát --');
+        $form->addSelect('stat', 'Stát:', $this->repo->getPairs('stat', 'id', 'nazev', 'nazev'));
+                //->setPrompt('-- vyberte stát --');
         //->setRequired('Zadejte stát');
         $form->addTextArea('note', 'Poznámka:')->getControlPrototype()->addAttributes(array('rows' => 5));
 
@@ -709,7 +714,7 @@ class CartControl extends Components\BaseControl {
         $mail->setHtmlBody($htmlBody);
 
         try {
-            $this->mailer->send($mail);
+            //$this->mailer->send($mail);
         } catch (\Exception $e) {
             $this->presenter->flashMessage('Email se nepodařilo odeslat. Zkuste prosím akci opakovat později.', FLASH_ERR);
 
@@ -747,37 +752,59 @@ class CartControl extends Components\BaseControl {
 
         foreach ($pair as $id => $p) {
             $upr2 = $p;
+
             $matches_s_dph = array();
             $matches_bez_dph = array();
 
-            $replace = array();
             $pattern = array();
+            $pattern[] = self::PATTERN_C_S_DPH_START;
+            $pattern[] = self::PATTERN_C_S_DPH_END;
+            $pattern[] = self::PATTERN_C_BEZ_DPH_START;
+            $pattern[] = self::PATTERN_C_BEZ_DPH_END;
+
+            $replace = array();
+            $replace[] = ', ';
+            $replace[] = ' s DPH';
+            $replace[] = ', cena ';
+            $replace[] = ' bez DPH';
+
+            $cena_vetsi_nez_nula = false;
 
             preg_match('/' . self::PATTERN_C_S_DPH_START . '([0-9\.,]+)' . self::PATTERN_C_S_DPH_END . '/', $upr2, $matches_s_dph);
             if (isset($matches_s_dph[1])) {
                 $pattern[] = $matches_s_dph[1];
                 $replace[] = \App\Helpers\Format::money($matches_s_dph[1], 'Kč');
+
+                if ($matches_s_dph[1] > 0) {
+                    $cena_vetsi_nez_nula = true;
+                }
             }
 
             preg_match('/' . self::PATTERN_C_BEZ_DPH_START . '([0-9\.,]+)' . self::PATTERN_C_BEZ_DPH_END . '/', $upr2, $matches_bez_dph);
             if (isset($matches_bez_dph[1])) {
                 $pattern[] = $matches_bez_dph[1];
                 $replace[] = \App\Helpers\Format::money($matches_bez_dph[1], 'Kč');
+
+                if ($matches_bez_dph[1] > 0) {
+                    $cena_vetsi_nez_nula = true;
+                }
             }
 
-            $pattern[] = self::PATTERN_C_S_DPH_START;
-            $pattern[] = self::PATTERN_C_S_DPH_END;
-            $pattern[] = self::PATTERN_C_BEZ_DPH_START;
-            $pattern[] = self::PATTERN_C_BEZ_DPH_END;
+            //\Tracy\Dumper::dump($cena_vetsi_nez_nula);
 
-            $replace[] = ', ';
-            $replace[] = ' s DPH';
-            $replace[] = ', cena ';
-            $replace[] = ' bez DPH';
+            if ($cena_vetsi_nez_nula) {
+                $pair_upr[$id] = str_replace($pattern, $replace, $upr2);
+            } else {
+                for ($i = 0; $i < count($pattern); $i++) {
+                    $upr2 = str_replace($pattern[$i], '', $upr2);
+                }
 
-            $pair_upr[$id] = str_replace($pattern, $replace, $upr2);
+                $pair_upr[$id] = $upr2;
+            }
+
+            //\Tracy\Dumper::dump($pair_upr);
         }
-
+        // die();
         return $pair_upr;
     }
 

@@ -7,3 +7,12 @@ parameters:
         #- Front
         #submodules:
         #    - Export
+
+    csob_apiUrl: 'https://iapi.iplatebnibrana.csob.cz/api/v1.6'
+    csob_keyPublicBank: %wwwDir%/../App/Model/Payment/Csob/Keys/test/mips_iplatebnibrana.csob.cz.pub
+    csob_keyPrivateMy: %wwwDir%/../App/Model/Payment/Csob/Keys/test/rsa_M1MIPS0736.key
+    csob_merchantID: M1MIPS0736
+    csob_returnUrl: 'http://www.pro-oil.cz/csob-return'
+    csob_shopName: 'Pro-Oil Morava s.r.o.'
+    csob_logFile: %wwwDir%/../log/csob.log
+    csob_tracyLogFile: %wwwDir%/../log/csob-tracy.log

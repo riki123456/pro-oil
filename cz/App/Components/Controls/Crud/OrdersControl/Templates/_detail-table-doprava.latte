@@ -16,7 +16,13 @@
         <tr><td colspan="6"><b>PLATBA</b></td></tr>
         <tr>
             <td><b>Způsob platby:</b></td>
-            <td colspan="2">{$dataZakaznik->objednavka_hlavicka->platba_nazev}</td>
+            <td colspan="2">
+                {$dataZakaznik->objednavka_hlavicka->platba_nazev}
+                
+                {if ($dataZakaznik->objednavka_hlavicka->platba_servicesId != '')}
+                    &nbsp;({$dataZakaznik->objednavka_hlavicka->platba_servicesId})
+                {/if}
+            </td>
             <td><b>Cena platby:</b></td>
             <td>{$dataZakaznik->objednavka_hlavicka->platba_cena_bez_dph|money: 'Kč'}</td>
             <td>{ceil($dataZakaznik->objednavka_hlavicka->platba_cena_s_dph)|money: 'Kč'}</td>

@@ -33,7 +33,8 @@
 		"tracy/tracy": "~2.3.0",
 		"dg/adminer-custom": "~1.6",
 		"janmarek/webloader": "^2.4",
-		"matthiasmullie/minify": "^1.3"
+		"matthiasmullie/minify": "^1.3",
+		"ondrakoupil/csob-eapi-paygate": "^1.5"
 	},
 	"require-dev": {
 		"nette/tester": "~1.3"

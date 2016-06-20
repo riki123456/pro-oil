@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fe3020b0f951640c73690a5fb6ab0fdf",
+    "hash": "1914879f84ebb58c33571b57672c2e1f",
+    "content-hash": "9b95b468769482c0c7c7a69798f8aff3",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -352,7 +353,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/bootstrap/zipball/8d2ee3ac4ad082c23cfb4b2bd198566afd6bb0e0",
+                "url": "https://api.github.com/repos/nette/bootstrap/zipball/f8fb4c73807c6888d904ea8c04324f2d94169c52",
                 "reference": "f8fb4c73807c6888d904ea8c04324f2d94169c52",
                 "shasum": ""
             },
@@ -1248,6 +1249,96 @@
             "description": "Nette Utility Classes",
             "homepage": "http://nette.org",
             "time": "2015-03-17 21:49:28"
+        },
+        {
+            "name": "ondrakoupil/csob-eapi-paygate",
+            "version": "v1.5.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ondrakoupil/csob.git",
+                "reference": "4bde96fba1dfc57ba73a5a46f490cac6f5d48bf3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ondrakoupil/csob/zipball/4bde96fba1dfc57ba73a5a46f490cac6f5d48bf3",
+                "reference": "4bde96fba1dfc57ba73a5a46f490cac6f5d48bf3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-openssl": "*",
+                "ondrakoupil/tools": "~0.0.5",
+                "php": ">=5.3.1"
+            },
+            "require-dev": {
+                "nette/tester": "dev-master",
+                "ondrakoupil/testing-utils": "~0.0.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OndraKoupil\\Csob\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ondrej Koupil",
+                    "email": "koupil@optimato.cz"
+                }
+            ],
+            "description": "PHP Client library for easy integration of ČSOB payment gateway",
+            "homepage": "https://github.com/ondrakoupil/csob",
+            "keywords": [
+                "Bank",
+                "cards",
+                "commerce",
+                "csob",
+                "merchant",
+                "pay",
+                "payment"
+            ],
+            "time": "2016-06-14 20:20:38"
+        },
+        {
+            "name": "ondrakoupil/tools",
+            "version": "v0.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ondrakoupil/tools.git",
+                "reference": "778c4931ba883d86a338ea9591d48eb9bb24eb13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ondrakoupil/tools/zipball/778c4931ba883d86a338ea9591d48eb9bb24eb13",
+                "reference": "778c4931ba883d86a338ea9591d48eb9bb24eb13",
+                "shasum": ""
+            },
+            "require-dev": {
+                "nette/tester": "^1.4@dev",
+                "ondrakoupil/testing-utils": "^0.0.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "OndraKoupil\\Tools\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ondrej Koupil",
+                    "email": "koupil@optimato.cz"
+                }
+            ],
+            "description": "Just a bunch of tools for myself",
+            "time": "2015-07-27 20:41:18"
         },
         {
             "name": "tracy/tracy",

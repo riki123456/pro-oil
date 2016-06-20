@@ -22,6 +22,10 @@ class Front extends Base {
         $frontRouter = new Routers\RouteList('Front');
         $frontRouter[] = new Routers\Route('index.php', 'Default:default', Routers\Route::ONE_WAY);
         
+        #-- csob return url
+        $frontRouter[] = new Routers\Route('csob-return', array('presenter'=>'Default', 'action'=>'paymentReturn', 'id'=>'csob'));
+        
+        #-- pevne adresy
         $frontRouter[] = new Routers\Route('sluzby', array('presenter'=>'Default', 'action'=>'page','id'=>'sluzby'));
         $frontRouter[] = new Routers\Route('obchodni-podminky', array('presenter'=>'Default', 'action'=>'page','id'=>'obchodni-podminky'));
         $frontRouter[] = new Routers\Route('o-spolecnosti', array('presenter'=>'Default', 'action'=>'page','id'=>'o-spolecnosti'));
@@ -30,9 +34,10 @@ class Front extends Base {
         $frontRouter[] = new Routers\Route('vyhledavani', array('presenter'=>'Default', 'action'=>'itemsSearch'));
         $frontRouter[] = new Routers\Route('nakupni-kosik', array('presenter'=>'Default', 'action'=>'shoppingCart'));
         
+        #-- cron
         $frontRouter[] = new Routers\Route('cron/<action>/<manuallyCall>', array('presenter'=>'Cron', 'action'=>'default', 'manuallyCall'=>0));
         
-        
+        #-- dynamic url
         $frontRouter[] = new Routers\Route('<category .+>/<manufacturer .+>/<id .+>', array('presenter'=>'Default', 'action'=>'itemDetail'));
         //$frontRouter[] = new Routers\Route('detail/<id .+>', array('presenter'=>'Default', 'action'=>'itemDetail'));
         $frontRouter[] = new Routers\Route('<category .+>[/<manufacturer>]', array('presenter'=>'Default', 'action'=>'items'));

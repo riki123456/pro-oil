@@ -1,0 +1,21 @@
+{block rightbar}
+
+    <div class="margin-bottom-base">
+        <a href="{plink Default:shoppingCart blankCart=>1}">
+            <img src="{constant('ROOT_WEB_WWW')}/images/sleva_20_v3.png" class="img-responsive" />
+        </a>    
+    </div>
+
+    {control itemsControl:itemsInAction}
+{/block}
+
+{block content}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="panel-title">Platba kartou</div>
+        </div>
+        <div class="panel panel-body">
+            {$paymentStatus|noescape}
+        </div>
+    </div>
+{/block}
