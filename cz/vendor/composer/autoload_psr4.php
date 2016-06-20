@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'OndraKoupil\\Tools\\' => array($vendorDir . '/ondrakoupil/tools/src'),
+    'OndraKoupil\\Csob\\' => array($vendorDir . '/ondrakoupil/csob-eapi-paygate/src'),
     'MatthiasMullie\\PathConverter\\' => array($vendorDir . '/matthiasmullie/path-converter/src'),
     'MatthiasMullie\\Minify\\' => array($vendorDir . '/matthiasmullie/minify/src'),
 );

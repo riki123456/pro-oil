@@ -9,6 +9,9 @@ use App\Modules\Base\Presenters,
 
 class DefaultPresenter extends Presenters\BasePresenter {
 
+    /** @var \App\Model\Payment @inject */
+    public $paymentClass;
+    
     /**
      * Vytvoří komponentu itemsControl
      */
@@ -85,6 +88,27 @@ class DefaultPresenter extends Presenters\BasePresenter {
          */
     }
 
+    /**
+     * zpracuje navratove hodnoty z payment sluzby. Co a jak delat dle $id
+     * 
+     * @param string $id identifikace sluzby
+     */
+    public function renderPaymentReturn($id) {
+        $pom = new \stdClass();
+        $pom->platba_nazev = $id = 'csob' ? 'PLATBA KARTOU' : null;        
+        $this->paymentClass->setOrderData(array(0=>array(0=>$pom)));
+        
+        $res = $this->paymentClass->getActivePaymentClass()->getReturnResult();
+        
+        if($res['paymentStatus'] == 7) {
+            $this->template->paymentStatus = 'Platba proběhla úspěšně. Děkujeme za nákup.';
+        } else {
+            $this->template->paymentStatus = 'Platba se bohužel nezdařila. ';
+            $this->template->paymentStatus.= '<a href="'. $this->link('Default:contact', array('id'=>'kontaktni-informace')). '" style="text-decoration: underline;">';
+            $this->template->paymentStatus.= 'Kontaktujte</a> prosím naše obchodní oddělení.';
+        }
+    }
+    
     /**
      * stranka s objednavkou
      * - data bere ze session

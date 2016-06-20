@@ -832,7 +832,7 @@
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/nette/bootstrap/zipball/8d2ee3ac4ad082c23cfb4b2bd198566afd6bb0e0",
+            "url": "https://api.github.com/repos/nette/bootstrap/zipball/f8fb4c73807c6888d904ea8c04324f2d94169c52",
             "reference": "f8fb4c73807c6888d904ea8c04324f2d94169c52",
             "shasum": ""
         },
@@ -1404,6 +1404,100 @@
             "javascript",
             "minifier",
             "minify"
+        ]
+    },
+    {
+        "name": "ondrakoupil/tools",
+        "version": "v0.0.6",
+        "version_normalized": "0.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ondrakoupil/tools.git",
+            "reference": "778c4931ba883d86a338ea9591d48eb9bb24eb13"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ondrakoupil/tools/zipball/778c4931ba883d86a338ea9591d48eb9bb24eb13",
+            "reference": "778c4931ba883d86a338ea9591d48eb9bb24eb13",
+            "shasum": ""
+        },
+        "require-dev": {
+            "nette/tester": "^1.4@dev",
+            "ondrakoupil/testing-utils": "^0.0.7"
+        },
+        "time": "2015-07-27 20:41:18",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "OndraKoupil\\Tools\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Ondrej Koupil",
+                "email": "koupil@optimato.cz"
+            }
+        ],
+        "description": "Just a bunch of tools for myself"
+    },
+    {
+        "name": "ondrakoupil/csob-eapi-paygate",
+        "version": "v1.5.4",
+        "version_normalized": "1.5.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ondrakoupil/csob.git",
+            "reference": "4bde96fba1dfc57ba73a5a46f490cac6f5d48bf3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ondrakoupil/csob/zipball/4bde96fba1dfc57ba73a5a46f490cac6f5d48bf3",
+            "reference": "4bde96fba1dfc57ba73a5a46f490cac6f5d48bf3",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "ext-openssl": "*",
+            "ondrakoupil/tools": "~0.0.5",
+            "php": ">=5.3.1"
+        },
+        "require-dev": {
+            "nette/tester": "dev-master",
+            "ondrakoupil/testing-utils": "~0.0.7"
+        },
+        "time": "2016-06-14 20:20:38",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "OndraKoupil\\Csob\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Ondrej Koupil",
+                "email": "koupil@optimato.cz"
+            }
+        ],
+        "description": "PHP Client library for easy integration of ČSOB payment gateway",
+        "homepage": "https://github.com/ondrakoupil/csob",
+        "keywords": [
+            "Bank",
+            "cards",
+            "commerce",
+            "csob",
+            "merchant",
+            "pay",
+            "payment"
         ]
     }
 ]

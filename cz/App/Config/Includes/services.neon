@@ -6,10 +6,27 @@ services:
     heurekaRequester:
         class : App\Model\Heureka\Overeno\Requester
 
+    #-- HOTOVOST payment gateway
+    hotovostFinalClass: 
+        class : App\Model\Payment\Hotovost\Main
+
+    #-- CSOB payment gateway, prevod do nette
+    csobConfig:
+        class : OndraKoupil\Csob\Config(%csob_merchantID%, %csob_keyPrivateMy%, %csob_keyPublicBank%, %csob_shopName%, %csob_returnUrl%, %csob_apiUrl%)
+    csobClient:
+        class : OndraKoupil\Csob\Client(@csobConfig, %csob_logFile%, %csob_tracyLogFile%)
+    csobPayment:
+        class : OndraKoupil\Csob\Payment(null) #-- parametr $orderNo je bohuzel povinny. Musime aktualizovat az v kodu!
+    csobFinalClass:
+        class : App\Model\Payment\Csob\Main(@csobClient, @csobPayment)
+
+    - App\Model\Payment(@csobFinalClass)
+
     - App\Model\UserManager # IAuthenticator
     - App\Model\Breadcrumb('main', '/', 'Hlavní strana')
     - App\Model\Repositories\RepositoryOrders(@repository)   
-    - App\Model\Payment(@repository)
+
+
     - App\Model\Heureka\Overeno(::constant(HEUREKA_API), ::constant(HEUREKA_SECRET_CODE), @heurekaRequester)
 
     - App\Components\Forms\LoginForm\ILoginFormFactory #-- prihlaseni

@@ -8,8 +8,8 @@ constants:
     HEUREKA_API: 'http://www.heureka.cz/direct/dotaznik/objednavka.php'
     HEUREKA_SECRET_CODE: '44fe6f1705efab4023718dbef121cd78'
 
-    DPH: 1.21
-    DPH_PROCENTO: 21
+    DPH: 1.20
+    DPH_PROCENTO: 20
 
     DOMAIN: pro-oil.sk
 

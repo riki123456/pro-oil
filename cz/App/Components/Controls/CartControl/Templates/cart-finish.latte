@@ -9,10 +9,6 @@
         {/if}
     </p>
 
-    {ifset $paymentClass}
-        <p>{$paymentClass->finish()}</p>
-    {/ifset}    
-    
     <p>
         <br/>
         <a href="{plink Default:}" class="btn btn-primary"><span class="fa fa-angle-double-left"></span> Zpět na hlavní stránku obchodu</a>
@@ -24,6 +20,23 @@
             {/if}
         </span>
     </p>
+
+    <hr/>
+
+    {if (isset($paymentClassData) && $paymentClassData != '')}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">Platba kartou</div>
+            </div>
+            <div class="panel panel-body" id="paymentElement">
+                Vybrali jste si platbu kartou. <br/><br/>
+
+                {$paymentClassData|noescape}
+            </div>
+        </div>
+    {/if}    
+
+
 </div>
 
 {if constant("ZBOZI_ANALYTICS") == true}
@@ -41,19 +54,22 @@
     {var $_idObjH = (isset($ordData[0]->ciselna_rada)) ? $ordData[0]->ciselna_rada : 0}
     <script type="text/javascript">
         var _hrq = _hrq || [];
-            _hrq.push(['setKey', 'B01EE4C24A08EC9B331D333858758284']);
-            _hrq.push(['setOrderId', '{$_idObjH|noescape}']);
-            {foreach $ordData as $d}
-                {var $_nazev = htmlspecialchars($d->ora_polozka_nazev . ' ' . $d->ora_polozka_baleni_pocet . $d->ora_polozka_baleni_mj . ' ' . $d->ora_polozka_vyrobce_nazev)}
-                _hrq.push(['addProduct', '{$_nazev|noescape}', '{ceil($d->ora_cena_s_dph)|noescape}', '{$d->ora_pocet|noescape}']);            
-            {/foreach}
-                    
-            _hrq.push(['trackOrder']);
+        _hrq.push(['setKey', 'B01EE4C24A08EC9B331D333858758284']);
+        _hrq.push(['setOrderId', '{$_idObjH|noescape}']);
+        {foreach $ordData as $d}
+            {var $_nazev = htmlspecialchars($d->ora_polozka_nazev . ' ' . $d->ora_polozka_baleni_pocet . $d->ora_polozka_baleni_mj . ' ' . $d->ora_polozka_vyrobce_nazev)}
+        _hrq.push(['addProduct', '{$_nazev|noescape}', '{ceil($d->ora_cena_s_dph)|noescape}', '{$d->ora_pocet|noescape}']);
+        {/foreach}
 
-        (function() {
-            var ho = document.createElement('script'); ho.type = 'text/javascript'; ho.async = true;
+        _hrq.push(['trackOrder']);
+
+        (function () {
+            var ho = document.createElement('script');
+            ho.type = 'text/javascript';
+            ho.async = true;
             ho.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.heureka.cz/direct/js/ext/1-roi-async.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ho, s);
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(ho, s);
         })();
     </script>
 {/if}

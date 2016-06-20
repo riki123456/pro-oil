@@ -1,14 +1,31 @@
 $(function () {
+    // kontrola, zda nemame nejaky vystup z payment sluzby
+    // pokud ano, zkusime automaticky zpracovat (zatim jen pro redirect a obyc. string)
+    if ($("#paymentElement").length > 0) {
+        setInterval(function () {
+            var _seconds = $("#paymentTimer").text();
+
+            if (_seconds > 1) {
+                _seconds = _seconds - 1;
+                $("#paymentTimer").text(_seconds);
+            } else {
+                $("#paymentTimer").text(0);
+                
+                window.location.href = $("#paymentTimer").parent().attr('href');
+            }
+        }, 1000);
+    }
+
     // uprava designu, takovy maly workaround
-    if($(".obsah-kosiku").length > 0) {
+    if ($(".obsah-kosiku").length > 0) {
         var _row = $(".container-front").find(".row").eq(1);//.last();
         var _col_sm_3 = _row.find(".col-sm-3");
         var _col_sm_7 = _row.find(".col-sm-7");
-        
+
         _col_sm_3.css("display", "none");
         _col_sm_7.removeClass("col-sm-7").addClass("col-sm-10");
     }
-    
+
     // aktualizace button pro zobrazeni aktualniho mini kosiku
     $('.cart-mini-update').click(function () {
         updateCart($(this));
@@ -18,59 +35,66 @@ $(function () {
 
         return false;
     });
-    
+
     // uvodni update
-    updateCenaCelkemSdopravou($("input[name='doprava_id']").filter(function() { return $(this).is(':checked'); }));
-    
+    updateCenaCelkemSdopravou($("input[name='doprava_id']").filter(function () {
+        return $(this).is(':checked');
+    }));
+
     // a onclick
-    $("input[name='doprava_id']").click(function() {
+    $("input[name='doprava_id']").click(function () {
         updateCenaCelkemSdopravou($(this));
-        
+
     });
 });
 
 function updateCenaCelkemSdopravou(event) {
-    if(event.length <= 0) return;
-    
+    if (event.length <= 0)
+        return;
+
     // formatovani currency - switch between languages
     numeral.language(RKW.lang);
 
-   // a pocitame
+    // a pocitame
     var cena_celkem_s_dph = parseFloat($("#cena_celkem_s_dph").text().replace(',', '.').replace(/[^0-9\.]/g, ''));
-    var cena_celkem_bez_dph = parseFloat($("#cena_celkem_bez_dph").text().replace(',', '.').replace(/[^0-9\.]/g, ''));    
-    
+    var cena_celkem_bez_dph = parseFloat($("#cena_celkem_bez_dph").text().replace(',', '.').replace(/[^0-9\.]/g, ''));
+
     // najdeme si ceny, jsou vzdy posledni 2 v poli
-    var cena_doprava_input = event.parent().text().replace('DPH,','#').replace(', cena', '#');
-    var _c_bez_dph = 0;
-    var _c_s_dph = 0;
-    
+    var cena_doprava_input = event.parent().text().replace('DPH,', '#').replace(', cena', '#');
+    var _c_bez_dph = parseFloat(0);
+    var _c_s_dph = parseFloat(0);
+
     var cena_doprava_input__arr = cena_doprava_input.split("#");
-    _c_s_dph = parseFloat(cena_doprava_input__arr.pop().replace(',', '.').replace(/[^0-9\.]/g, ''));
-    _c_bez_dph = parseFloat(cena_doprava_input__arr.pop().replace(',', '.').replace(/[^0-9\.]/g, ''));
-    
-    var cena_celkem_doprava_bez_dph = (cena_celkem_bez_dph + _c_bez_dph).toString().replace('.',',');
+    if (cena_doprava_input__arr.length === 3) {
+        _c_s_dph = parseFloat(cena_doprava_input__arr.pop().replace(',', '.').replace(/[^0-9\.]/g, ''));
+        _c_bez_dph = parseFloat(cena_doprava_input__arr.pop().replace(',', '.').replace(/[^0-9\.]/g, ''));
+    }
+
+    var cena_celkem_doprava_bez_dph = (cena_celkem_bez_dph + _c_bez_dph).toString().replace('.', ',');
     var cena_celkem_doprava_s_dph = Math.ceil((cena_celkem_s_dph + _c_s_dph)).toString().replace('.', ',');
-    
+
     $("#cena_celkem_doprava_bez_dph").text(numeral(cena_celkem_doprava_bez_dph).format('0,0 $'));
     $("#cena_celkem_doprava_s_dph").text(numeral(cena_celkem_doprava_s_dph).format('0,0 $'));
-    
+
     /*
-    window.console.log(event.parent().text().replace('DPH,','#'));
-    window.console.log(event.text());//.text().replace(/[^0-9\.]/g, ''));
-    
-    window.console.log("CENA ZA POLOZKY: " + cena_celkem_s_dph);
-    window.console.log("CENA ZA POLOZKY bez DPH: " + cena_celkem_bez_dph);
-    
-    window.console.log("cena_doprava_input:");
-    window.console.log(cena_doprava_input);
-    window.console.log("cena_doprava_input__arr:");
-    window.console.log(cena_doprava_input__arr);
-    window.console.log("cena_doprava_input - CENY:");
-    window.console.log(_c_bez_dph, _c_s_dph);
-    
-    window.console.log("CENA ZA DOPRAVU: " + cena_celkem_doprava_s_dph);
-    window.console.log("CENA ZA DOPRAVU bez DPH: " + cena_celkem_doprava_bez_dph);
-    */
+     window.console.log("EVENT.TEXT() :" + event.text());//.text().replace(/[^0-9\.]/g, ''));
+     window.console.log("EVENT.PARENT().TEXT() :" + event.parent().text());//.text().replace(/[^0-9\.]/g, ''));
+     window.console.log("EVENT.PARENT().TEXT().REPLACE() : " + event.parent().text().replace('DPH,','#'));
+     
+     
+     window.console.log("CENA ZA POLOZKY: " + cena_celkem_s_dph);
+     window.console.log("CENA ZA POLOZKY bez DPH: " + cena_celkem_bez_dph);
+     
+     window.console.log("cena_doprava_input:");
+     window.console.log(cena_doprava_input);
+     window.console.log("cena_doprava_input__arr:");
+     window.console.log(cena_doprava_input__arr);
+     window.console.log("cena_doprava_input - CENY:");
+     window.console.log(_c_bez_dph, _c_s_dph);
+     
+     window.console.log("CENA ZA DOPRAVU: " + cena_celkem_doprava_s_dph);
+     window.console.log("CENA ZA DOPRAVU bez DPH: " + cena_celkem_doprava_bez_dph);
+     */
 }
 
 function updateCart(event) {
