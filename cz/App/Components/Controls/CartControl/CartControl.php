@@ -714,7 +714,7 @@ class CartControl extends Components\BaseControl {
         $mail->setHtmlBody($htmlBody);
 
         try {
-            //$this->mailer->send($mail);
+            $this->mailer->send($mail);
         } catch (\Exception $e) {
             $this->presenter->flashMessage('Email se nepodařilo odeslat. Zkuste prosím akci opakovat později.', FLASH_ERR);
 
