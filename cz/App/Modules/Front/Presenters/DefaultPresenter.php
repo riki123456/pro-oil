@@ -11,7 +11,7 @@ class DefaultPresenter extends Presenters\BasePresenter {
 
     /** @var \App\Model\Payment @inject */
     public $paymentClass;
-    
+
     /**
      * Vytvoří komponentu itemsControl
      */
@@ -95,20 +95,57 @@ class DefaultPresenter extends Presenters\BasePresenter {
      */
     public function renderPaymentReturn($id) {
         $pom = new \stdClass();
-        $pom->platba_nazev = $id = 'csob' ? 'PLATBA KARTOU' : null;        
-        $this->paymentClass->setOrderData(array(0=>array(0=>$pom)));
-        
+        $pom->platba_nazev = $id = 'csob' ? 'PLATBA KARTOU' : null;
+        $this->paymentClass->setOrderData(array(0 => array(0 => $pom)));
+
         $res = $this->paymentClass->getActivePaymentClass()->getReturnResult();
-        
-        if($res['paymentStatus'] == 7) {
-            $this->template->paymentStatus = 'Platba proběhla úspěšně. Děkujeme za nákup.';
+        if ($res['resultCode'] == 0) {
+            switch ($res['paymentStatus']) {
+                case 1:
+                    $this->template->paymentStatus = 'Platba bylo v pořádku založena.';
+                    break;
+                case 2:
+                    $this->template->paymentStatus = 'Platba přávě probíhá.';
+                    break;
+                case 3:
+                    $this->template->paymentStatus = 'Platba byla zrušena.';
+                    break;
+                case 5:
+                    $this->template->paymentStatus = 'Platba byla odvolána.';
+                    break;
+                case 6:
+                    $this->template->paymentStatus = 'Platba byla zamítnuta.';
+                    break;
+                case 4:
+                case 7:
+                    $this->template->paymentStatus = 'Platba proběhla úspěšně. Děkujeme za nákup.';
+                    break;
+                case 8:
+                    $this->template->paymentStatus = 'Platba byla zúčtována.';
+                    break;
+                case 9:
+                    $this->template->paymentStatus = 'Probíhá zpracování vrácení platby.';
+                    break;
+                case 10:
+                    $this->template->paymentStatus = 'Platba byla vrácena.';
+                    break;
+                default:
+                    $this->template->paymentStatus = 'Platba se bohužel nezdařila. ';
+            }
         } else {
-            $this->template->paymentStatus = 'Platba se bohužel nezdařila. ';
-            $this->template->paymentStatus.= '<a href="'. $this->link('Default:contact', array('id'=>'kontaktni-informace')). '" style="text-decoration: underline;">';
-            $this->template->paymentStatus.= 'Kontaktujte</a> prosím naše obchodní oddělení.';
+            throw new \Exception("Spatny result code: " . $res['resultCode'] . ". Mel by byt 0 !");
+        }
+
+        $this->template->paymentStatus .= '<br/><br/>';
+        $this->template->paymentStatus .= 'V případě jakýkoliv nejasností či možných chyb ';
+        $this->template->paymentStatus.= '<a href="' . $this->link('Default:contact', array('id' => 'kontaktni-informace')) . '" style="text-decoration: underline;">';
+        $this->template->paymentStatus.= 'Kontaktujte</a> prosím naše obchodní oddělení.';
+
+        if (isset($res['payId'])) {
+            $this->repository->update('objednavka_hlavicka', array('platba_paymentStatus' => $res['paymentStatus']), 'platba_servicesId = ?', $res['payId']);
         }
     }
-    
+
     /**
      * stranka s objednavkou
      * - data bere ze session
