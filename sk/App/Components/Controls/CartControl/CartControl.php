@@ -301,6 +301,15 @@ class CartControl extends Components\BaseControl {
      * @param Form $form
      */
     public function successZakaznikForm($form) {
+        #-- roboti nam odesilaji objednavky - bez polozek
+        #-- tak to osetrime
+        $sdata = $this->getSessionData();
+        if (false === $sdata || empty($sdata)) {
+            $this->presenter->flashMessage('V objednávce nejsou uvedeny žádné položky!', FLASH_ERR);
+            #-- redirect
+            $this->getParent()->successZakaznikForm($form, null);
+        }
+        
         #-- data as array
         $data = $form->getValues(true);
 
@@ -373,6 +382,10 @@ class CartControl extends Components\BaseControl {
      * @return Form
      */
     protected function createComponentBlankCartForm() {
+        // fileCollection - js
+        $fcol = $this->presenter->getComponent("jsDynamic")->getCompiler()->getFileCollection();
+        $fcol->addFile(__DIR__ . '/../Scripts/recaptcha.js');
+        
         $form = new Form;
         $form->addProtection('Odešlete formulář znovu prosím (bezpečtnostní token vypršel).');
 
@@ -383,7 +396,8 @@ class CartControl extends Components\BaseControl {
                 ->addRule(Form::EMAIL, "Email nemá správný formát.");
         $form->addTextArea('zprava', 'Vaše poptávka:')->setRequired('Poptávka musí být vyplněna.')
                 ->getControlPrototype()->addAttributes(array('rows' => 10));
-
+        $form->addReCaptcha('captcha', NULL, 'Ověření se nezdařilo. Zkuste prosím akci zopakovat.');
+        
         #-- buttons
         $form->addSubmit('ok', 'Odeslat');
 
@@ -459,8 +473,8 @@ class CartControl extends Components\BaseControl {
         $form->addText("ulice", "Ulice, č. p.:")->setRequired('Zadejte ulici');
         $form->addText("mesto", "Město:")->setRequired('Zadejte město');
         $form->addText("psc", "PSČ:")->setRequired('Zadejte psč');
-        $form->addSelect('stat', 'Stát:', $this->repo->getPairs('stat', 'id', 'nazev', 'nazev'))
-                ->setPrompt('-- vyberte stát --');
+        $form->addSelect('stat', 'Stát:', $this->repo->getPairs('stat', 'id', 'nazev', 'nazev'));
+               //->setPrompt('-- vyberte stát --');
         //->setRequired('Zadejte stát');
         $form->addTextArea('note', 'Poznámka:')->getControlPrototype()->addAttributes(array('rows' => 5));
 

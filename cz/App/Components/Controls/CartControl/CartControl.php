@@ -203,11 +203,11 @@ class CartControl extends Components\BaseControl {
         #-- payment class - na zpracovani plateb tretich stran
         $this->paymentClass->setOrderData($ordDataFull);
         $this->template->paymentClassData = $this->paymentClass->processOrderData();
-        
-        if(null != $this->paymentClass->getPaymentResponseId()) {
+
+        if (null != $this->paymentClass->getPaymentResponseId()) {
             $this->repo->update('objednavka_hlavicka', array('platba_servicesId' => $this->paymentClass->getPaymentResponseId()), 'id = ?', $this->template->ordData[0]->id);
         }
-        
+
         #-- overeno zakazniky - heureka
         if (HEUREKA_OVERENO_ZAKAZNIKY == true) {
             try {
@@ -305,6 +305,15 @@ class CartControl extends Components\BaseControl {
      * @param Form $form
      */
     public function successZakaznikForm($form) {
+        #-- roboti nam odesilaji objednavky - bez polozek
+        #-- tak to osetrime
+        $sdata = $this->getSessionData();
+        if (false === $sdata || empty($sdata)) {
+            $this->presenter->flashMessage('V objednávce nejsou uvedeny žádné položky!', FLASH_ERR);
+            #-- redirect
+            $this->getParent()->successZakaznikForm($form, null);
+        }
+
         #-- data as array
         $data = $form->getValues(true);
 
@@ -377,6 +386,10 @@ class CartControl extends Components\BaseControl {
      * @return Form
      */
     protected function createComponentBlankCartForm() {
+        // fileCollection - js
+        $fcol = $this->presenter->getComponent("jsDynamic")->getCompiler()->getFileCollection();
+        $fcol->addFile(__DIR__ . '/../Scripts/recaptcha.js');
+        
         $form = new Form;
         $form->addProtection('Odešlete formulář znovu prosím (bezpečtnostní token vypršel).');
 
@@ -387,7 +400,8 @@ class CartControl extends Components\BaseControl {
                 ->addRule(Form::EMAIL, "Email nemá správný formát.");
         $form->addTextArea('zprava', 'Vaše poptávka:')->setRequired('Poptávka musí být vyplněna.')
                 ->getControlPrototype()->addAttributes(array('rows' => 10));
-
+        $form->addReCaptcha('captcha', NULL, 'Ověření se nezdařilo. Zkuste prosím akci zopakovat.');
+        
         #-- buttons
         $form->addSubmit('ok', 'Odeslat');
 
@@ -425,7 +439,7 @@ class CartControl extends Components\BaseControl {
 
             //mame patterny, ktere prelozime v po provedeni dotazu na html. Je to prasarna, ale alespon neprasime sql
             $radio = $this->formRadio($form, 'platba_id', 'Platba', $vychozi2 == false ? 0 : $vychozi2->id, $this->replaceRadioPattern($pair));
-            $radio->getSeparatorPrototype()->addAttributes(array('class'=>'payment'));
+            $radio->getSeparatorPrototype()->addAttributes(array('class' => 'payment'));
         }
 
         #-- doprava
@@ -465,7 +479,7 @@ class CartControl extends Components\BaseControl {
         $form->addText("mesto", "Město:")->setRequired('Zadejte město');
         $form->addText("psc", "PSČ:")->setRequired('Zadejte psč');
         $form->addSelect('stat', 'Stát:', $this->repo->getPairs('stat', 'id', 'nazev', 'nazev'));
-                //->setPrompt('-- vyberte stát --');
+        //->setPrompt('-- vyberte stát --');
         //->setRequired('Zadejte stát');
         $form->addTextArea('note', 'Poznámka:')->getControlPrototype()->addAttributes(array('rows' => 5));
 

@@ -1499,5 +1499,52 @@
             "pay",
             "payment"
         ]
+    },
+    {
+        "name": "uestla/recaptcha-control",
+        "version": "3.0.0",
+        "version_normalized": "3.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/uestla/ReCaptchaControl.git",
+            "reference": "fd920b588e60d8d1f1a6d790a99fa5f3b449dd73"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/uestla/ReCaptchaControl/zipball/fd920b588e60d8d1f1a6d790a99fa5f3b449dd73",
+            "reference": "fd920b588e60d8d1f1a6d790a99fa5f3b449dd73",
+            "shasum": ""
+        },
+        "require": {
+            "ext-curl": "*",
+            "nette/di": "^2.3",
+            "nette/forms": "^2.3",
+            "nette/http": "^2.3",
+            "nette/php-generator": "^2.3",
+            "nette/utils": "^2.3",
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "tracy/tracy": "*"
+        },
+        "time": "2016-03-03 11:53:26",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "ReCaptchaControl": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "reCAPTCHA control for Nette Framework forms",
+        "homepage": "https://github.com/uestla/ReCaptchaControl",
+        "keywords": [
+            "Forms",
+            "nette",
+            "recaptcha"
+        ]
     }
 ]

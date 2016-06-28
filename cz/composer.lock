@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1914879f84ebb58c33571b57672c2e1f",
-    "content-hash": "9b95b468769482c0c7c7a69798f8aff3",
+    "hash": "82c0433c8acf3040fd269b9dbb1f7f9f",
+    "content-hash": "692ef26a944826e84428196fb7d8b3c5",
     "packages": [
         {
             "name": "dg/adminer-custom",
@@ -1399,6 +1399,51 @@
                 "nette"
             ],
             "time": "2015-05-03 16:36:14"
+        },
+        {
+            "name": "uestla/recaptcha-control",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/uestla/ReCaptchaControl.git",
+                "reference": "fd920b588e60d8d1f1a6d790a99fa5f3b449dd73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/uestla/ReCaptchaControl/zipball/fd920b588e60d8d1f1a6d790a99fa5f3b449dd73",
+                "reference": "fd920b588e60d8d1f1a6d790a99fa5f3b449dd73",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "nette/di": "^2.3",
+                "nette/forms": "^2.3",
+                "nette/http": "^2.3",
+                "nette/php-generator": "^2.3",
+                "nette/utils": "^2.3",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "tracy/tracy": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ReCaptchaControl": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "reCAPTCHA control for Nette Framework forms",
+            "homepage": "https://github.com/uestla/ReCaptchaControl",
+            "keywords": [
+                "Forms",
+                "nette",
+                "recaptcha"
+            ],
+            "time": "2016-03-03 11:53:26"
         }
     ],
     "packages-dev": [

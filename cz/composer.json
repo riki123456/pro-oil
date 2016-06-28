@@ -34,7 +34,8 @@
 		"dg/adminer-custom": "~1.6",
 		"janmarek/webloader": "^2.4",
 		"matthiasmullie/minify": "^1.3",
-		"ondrakoupil/csob-eapi-paygate": "^1.5"
+		"ondrakoupil/csob-eapi-paygate": "^1.5",
+		"uestla/recaptcha-control": "3.*"
 	},
 	"require-dev": {
 		"nette/tester": "~1.3"

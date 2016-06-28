@@ -413,6 +413,10 @@ class ItemsControl extends Crud\CrudControl {
      * @return UI\Form
      */
     protected function createComponentQuestionForm() {
+        // fileCollection - js
+        $fcol = $this->presenter->getComponent("jsDynamic")->getCompiler()->getFileCollection();
+        $fcol->addFile(__DIR__ . '/../../Scripts/recaptcha.js');
+        
         $form = new Form();
         $form->addProtection('Odešlete formulář znovu prosím (bezpečtnostní token vypršel).');
 
@@ -423,7 +427,8 @@ class ItemsControl extends Crud\CrudControl {
                 ->addRule(Form::EMAIL, "Email nemá správný formát.");
         $form->addTextArea('zprava', 'Vaše zpráva:')->setRequired('Zpráva musí být vyplněna.')
                 ->getControlPrototype()->addAttributes(array('rows' => 7));
-
+        $form->addReCaptcha('captcha', NULL, 'Ověření se nezdařilo. Zkuste prosím akci zopakovat.');
+        
         #-- buttons
         $form->addSubmit('ok', 'Odeslat');
 

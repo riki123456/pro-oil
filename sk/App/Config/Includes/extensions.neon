@@ -1,5 +1,11 @@
 extensions:
     webloader: WebLoader\Nette\Extension()
+        reCaptcha: ReCaptchaControl\ReCaptchaExtension
+
+reCaptcha:
+    siteKey: '6LfYmiMTAAAAAPwEEFcHBBRNBEAYiYj9RsGsfO1_'
+    secretKey: '6LfYmiMTAAAAAM7xUDh5Cy9W6zU46N2IhSp4NFys'
+    methodName: 'addReCaptcha'
 
 services:
     wlCssFilter: WebLoader\Filter\CssUrlsFilter(%wwwDir%, '/www')

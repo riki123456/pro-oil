@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'WebLoader' => array($vendorDir . '/janmarek/webloader'),
+    'ReCaptchaControl' => array($vendorDir . '/uestla/recaptcha-control/src'),
 );

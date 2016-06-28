@@ -6,6 +6,15 @@ $(function () {
     $("#form-question").click(function () {
         $(this).parent().next().removeClass('hidden');
     });
+    if($("#form-question").parent().parent().find('.form-group.has-error').length > 0) {
+        $("#form-question").parent().next().removeClass('hidden');
+        setTimeout(function() {
+            $('html,body').animate({
+                scrollTop: $("#form-question").parent().parent().offset().top - 10
+            });
+        }, 100);
+        
+    }
 
     // search form expanded switcher
     $("#form-search").find('input[name="s-nazev"]').focusin(
