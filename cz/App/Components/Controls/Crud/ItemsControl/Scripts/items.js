@@ -6,23 +6,31 @@ $(function () {
     $("#form-question").click(function () {
         $(this).parent().next().removeClass('hidden');
     });
-    if($("#form-question").parent().parent().find('.form-group.has-error').length > 0) {
+    if ($("#form-question").parent().parent().find('.form-group.has-error').length > 0) {
         $("#form-question").parent().next().removeClass('hidden');
-        setTimeout(function() {
+        setTimeout(function () {
             $('html,body').animate({
                 scrollTop: $("#form-question").parent().parent().offset().top - 10
             });
         }, 100);
-        
+
     }
 
     // search form expanded switcher
+    $("#form-search").click(function (e) {
+        e.stopPropagation();
+    });
     $("#form-search").find('input[name="s-nazev"]').focusin(
             function () {
                 $("#form-search #form-search-expanded").show();
             }
     );
     $("#form-search-expanded-close").click(
+            function () {
+                $("#form-search #form-search-expanded").hide();
+            }
+    );
+    $('html, body').click(
             function () {
                 $("#form-search #form-search-expanded").hide();
             }
@@ -73,8 +81,7 @@ $(function () {
                         return 'disabled';
                     } else if ((type === 'last' || type === 'next') && current === $_data.paginationTotalpage) {
                         return 'disabled';
-                    }
-                    else {
+                    } else {
                         return 'pointer';
                     }
                 }

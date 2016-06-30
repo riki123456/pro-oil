@@ -1,6 +1,6 @@
 extensions:
     webloader: WebLoader\Nette\Extension()
-        reCaptcha: ReCaptchaControl\ReCaptchaExtension
+    reCaptcha: ReCaptchaControl\ReCaptchaExtension
 
 reCaptcha:
     siteKey: '6LfYmiMTAAAAAPwEEFcHBBRNBEAYiYj9RsGsfO1_'

@@ -17,12 +17,20 @@ $(function () {
     }
 
     // search form expanded switcher
+    $("#form-search").click(function (e) {
+        e.stopPropagation();
+    });
     $("#form-search").find('input[name="s-nazev"]').focusin(
             function () {
                 $("#form-search #form-search-expanded").show();
             }
     );
     $("#form-search-expanded-close").click(
+            function () {
+                $("#form-search #form-search-expanded").hide();
+            }
+    );
+    $('html, body').click(
             function () {
                 $("#form-search #form-search-expanded").hide();
             }
