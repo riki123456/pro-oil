@@ -146,7 +146,7 @@ class CartControl extends Components\BaseControl {
         $fcol = $this->presenter->getComponent("jsDynamic")->getCompiler()->getFileCollection();
         $fcol->addFile(ROOT_FS_WWW . '/media/nette/live-form-validation.min.js');
         $fcol->addFile(ROOT_FS_WWW . '/media/numeral/numeral.min.js');
-        $fcol->addFile(ROOT_FS_WWW . '/media/numeral/languages/cs.min.js');
+        $fcol->addFile(ROOT_FS_WWW . '/media/numeral/languages/' . LANG . '.min.js');
         $fcol->addFile(__DIR__ . '/../Scripts/Form.js');
 
         #-- template params
@@ -761,37 +761,59 @@ class CartControl extends Components\BaseControl {
 
         foreach ($pair as $id => $p) {
             $upr2 = $p;
+
             $matches_s_dph = array();
             $matches_bez_dph = array();
 
-            $replace = array();
             $pattern = array();
-
-            preg_match('/' . self::PATTERN_C_S_DPH_START . '([0-9\.,]+)' . self::PATTERN_C_S_DPH_END . '/', $upr2, $matches_s_dph);
-            if (isset($matches_s_dph[1])) {
-                $pattern[] = $matches_s_dph[1];
-                $replace[] = \App\Helpers\Format::money($matches_s_dph[1], 'Kč');
-            }
-
-            preg_match('/' . self::PATTERN_C_BEZ_DPH_START . '([0-9\.,]+)' . self::PATTERN_C_BEZ_DPH_END . '/', $upr2, $matches_bez_dph);
-            if (isset($matches_bez_dph[1])) {
-                $pattern[] = $matches_bez_dph[1];
-                $replace[] = \App\Helpers\Format::money($matches_bez_dph[1], 'Kč');
-            }
-
             $pattern[] = self::PATTERN_C_S_DPH_START;
             $pattern[] = self::PATTERN_C_S_DPH_END;
             $pattern[] = self::PATTERN_C_BEZ_DPH_START;
             $pattern[] = self::PATTERN_C_BEZ_DPH_END;
 
+            $replace = array();
             $replace[] = ', ';
             $replace[] = ' s DPH';
             $replace[] = ', cena ';
             $replace[] = ' bez DPH';
 
-            $pair_upr[$id] = str_replace($pattern, $replace, $upr2);
-        }
+            $cena_vetsi_nez_nula = false;
 
+            preg_match('/' . self::PATTERN_C_S_DPH_START . '([0-9\.,]+)' . self::PATTERN_C_S_DPH_END . '/', $upr2, $matches_s_dph);
+            if (isset($matches_s_dph[1])) {
+                $pattern[] = $matches_s_dph[1];
+                $replace[] = \App\Helpers\Format::money($matches_s_dph[1], 'Eur');
+
+                if ($matches_s_dph[1] > 0) {
+                    $cena_vetsi_nez_nula = true;
+                }
+            }
+
+            preg_match('/' . self::PATTERN_C_BEZ_DPH_START . '([0-9\.,]+)' . self::PATTERN_C_BEZ_DPH_END . '/', $upr2, $matches_bez_dph);
+            if (isset($matches_bez_dph[1])) {
+                $pattern[] = $matches_bez_dph[1];
+                $replace[] = \App\Helpers\Format::money($matches_bez_dph[1], 'Eur');
+
+                if ($matches_bez_dph[1] > 0) {
+                    $cena_vetsi_nez_nula = true;
+                }
+            }
+
+            //\Tracy\Dumper::dump($cena_vetsi_nez_nula);
+
+            if ($cena_vetsi_nez_nula) {
+                $pair_upr[$id] = str_replace($pattern, $replace, $upr2);
+            } else {
+                for ($i = 0; $i < count($pattern); $i++) {
+                    $upr2 = str_replace($pattern[$i], '', $upr2);
+                }
+
+                $pair_upr[$id] = $upr2;
+            }
+
+            //\Tracy\Dumper::dump($pair_upr);
+        }
+        // die();
         return $pair_upr;
     }
 

@@ -20,9 +20,9 @@
 
                     <div>{$item['nazev']}</div>
                     <span class="product-price">
-                        <b>{ceil($item['cena_bez_dph'] * constant('DPH'))|money: 'Kč'}</b>
+                        <b>{ceil($item['cena_bez_dph'] * constant('DPH'))|money: 'Eur'}</b>
                         <i>(vč. DPH {constant('DPH_PROCENTO')})</i> 
-                        <span class="fa fa-info-circle" data-toggle="tooltip" data-plament="top" title="Částka je zaokrouhlena na celé koruny nahoru"></span>
+                        <span class="fa fa-info-circle" data-toggle="tooltip" data-plament="top" title="Částka je zaokrouhlena na celé eura nahoru"></span>
                     </span>         
                 </a> 
                 <hr/>

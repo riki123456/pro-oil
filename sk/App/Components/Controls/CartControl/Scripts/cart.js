@@ -41,18 +41,21 @@ function updateCenaCelkemSdopravou(event) {
     
     // najdeme si ceny, jsou vzdy posledni 2 v poli
     var cena_doprava_input = event.parent().text().replace('DPH,','#').replace(', cena', '#');
-    var _c_bez_dph = 0;
-    var _c_s_dph = 0;
+    var _c_bez_dph = parseFloat(0);
+    var _c_s_dph = parseFloat(0);
     
     var cena_doprava_input__arr = cena_doprava_input.split("#");
-    _c_s_dph = parseFloat(cena_doprava_input__arr.pop().replace(',', '.').replace(/[^0-9\.]/g, ''));
-    _c_bez_dph = parseFloat(cena_doprava_input__arr.pop().replace(',', '.').replace(/[^0-9\.]/g, ''));
+    if (cena_doprava_input__arr.length === 3) {
+        _c_s_dph = parseFloat(cena_doprava_input__arr.pop().replace(',', '.').replace(/[^0-9\.]/g, ''));
+        _c_bez_dph = parseFloat(cena_doprava_input__arr.pop().replace(',', '.').replace(/[^0-9\.]/g, ''));
+    }
     
     var cena_celkem_doprava_bez_dph = (cena_celkem_bez_dph + _c_bez_dph).toString().replace('.',',');
     var cena_celkem_doprava_s_dph = Math.ceil((cena_celkem_s_dph + _c_s_dph)).toString().replace('.', ',');
     
     $("#cena_celkem_doprava_bez_dph").text(numeral(cena_celkem_doprava_bez_dph).format('0,0 $'));
     $("#cena_celkem_doprava_s_dph").text(numeral(cena_celkem_doprava_s_dph).format('0,0 $'));
+   
     
     /*
     window.console.log(event.parent().text().replace('DPH,','#'));

@@ -23,9 +23,9 @@
                                 <input type="hidden" name="items[{$order->id}][cena_s_dph]" value="{$_cena_s}" />
                             </td>
                             <td>{$order->baleni_pocet}{$order->baleni_mj}</td>
-                            <td>{$_cena_bez|money:'Kč'}</td>
-                            <td>{$_pocet * $_cena_bez|money:'Kč'}</td>
-                            <td>{ceil($_pocet * $_cena_s)|money:'Kč'}</td>
+                            <td>{$_cena_bez|money:'Eur'}</td>
+                            <td>{$_pocet * $_cena_bez|money:'Eur'}</td>
+                            <td>{ceil($_pocet * $_cena_s)|money:'Eur'}</td>
                             <td><a href="{link cart! removeItem, $order->id}" class="fa fa-remove inverse"></a></td>
                         </tr>
                     {/foreach}
@@ -34,15 +34,15 @@
                     <tr>
                         <td colspan="5">Cena celkem bez DPH <i>(suma cen objednaných položek bez DPH)</i></td>
                         <td colspan="2" style="text-align: right;">
-                            <span id="cena_celkem_bez_dph">{$cena_celkem_bez_dph|money:'Kč'}</span>
+                            <span id="cena_celkem_bez_dph">{$cena_celkem_bez_dph|money:'Eur'}</span>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="5"><span class="fa-size-1a5x active">Cena celkem s DPH <i>(cena celkem bez DPH * {constant('DPH_PROCENTO')}%)</i></span></td>
                         <td colspan="2" style="text-align: right;">
                             <span class="fa-size-1a5x active">
-                                <span id="cena_celkem_s_dph">{ceil($cena_celkem_bez_dph * constant('DPH'))|money: 'Kč'}</span>
-                                <sup class="fa fa-info-circle fa-size-0a7x" data-toggle="tooltip" data-placement="top" title="Částka je zaokrouhlena na celé koruny nahoru."></sup>
+                                <span id="cena_celkem_s_dph">{ceil($cena_celkem_bez_dph * constant('DPH'))|money: 'Eur'}</span>
+                                <sup class="fa fa-info-circle fa-size-0a7x" data-toggle="tooltip" data-placement="top" title="Částka je zaokrouhlena na celé eura nahoru."></sup>
                             </span>
                         </td>
                     </tr>

@@ -40,14 +40,14 @@
                                     <hr/>
 
                                     <div class="fa-size-1a4x active product-price">
-                                        Cena: <span>{ceil($itemData['cena_bez_dph'] * constant('DPH'))|money: 'Kč'}</span>
+                                        Cena: <span>{ceil($itemData['cena_bez_dph'] * constant('DPH'))|money: 'Eur'}</span>
                                         <span class="product-price-int-value hidden">{$itemData['cena_bez_dph'] * constant('DPH')}</span>
                                         <span class="small">
                                             (vč. DPH {constant('DPH_PROCENTO')}%) 
-                                            <span class="fa fa-info-circle" data-toggle="tooltip" data-plament="top" title="Částka je zaokrouhlena na celé koruny nahoru"></span>
+                                            <span class="fa fa-info-circle" data-toggle="tooltip" data-plament="top" title="Částka je zaokrouhlena na celé eura nahoru"></span>
                                         </span>
                                     </div>
-                                    <div>Cena bez DPH: {$itemData['cena_bez_dph']|money: 'Kč'}</div>
+                                    <div>Cena bez DPH: {$itemData['cena_bez_dph']|money: 'Eur'}</div>
 
                                     <hr/>
                                 </div>

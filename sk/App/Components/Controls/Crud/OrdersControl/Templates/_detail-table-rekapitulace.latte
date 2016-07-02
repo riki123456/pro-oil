@@ -14,14 +14,14 @@
 <tr><td colspan="6"><b>REKAPITULACE OBJEDNÁVKY</b></td></tr>
 <tr>
     <td colspan="5"><b>CENA CELKEM BEZ DPH</b> <i>(suma cen objednaných položek  bez DPH + cena dopravy bez DPH).</i></td>
-    <td>{$_cena_celkem_bez_dph__plus__doprava_bez_dph|money: 'Kč'}</td>
+    <td>{$_cena_celkem_bez_dph__plus__doprava_bez_dph|money: 'Eur'}</td>
 </tr>
 <tr>
     <td colspan="5"><b>DPH {constant("DPH_PROCENTO")} %</b></td>
-    <td>{ceil($_cena_jenom_dph__plus__doprava_jenom_dph)|money: 'Kč'}</td>
+    <td>{ceil($_cena_jenom_dph__plus__doprava_jenom_dph)|money: 'Eur'}</td>
 </tr>
 <tr>
     <td colspan="5"><b>CENA CELKEM S DPH</b> <i>(cena celkem bez DPH + {constant("DPH_PROCENTO")} % DPH zaokrouhleno na celé číslo)</i></td>
-    <td>{ceil($_cena_celkem_s_dph__plus__doprava_s_dph)|money: 'Kč'}</td>
+    <td>{ceil($_cena_celkem_s_dph__plus__doprava_s_dph)|money: 'Eur'}</td>
 </tr>
 

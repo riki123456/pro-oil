@@ -38,14 +38,14 @@
                             </a>
                             <span class="product-group margin-bottom-small">({$item['kategorie']['nazev']})</span>
                             <span class="product-price margin-bottom-small">
-                                <span>{ceil($item['cena_bez_dph'] * constant('DPH'))|money: 'Kč'}</span>
+                                <span>{ceil($item['cena_bez_dph'] * constant('DPH'))|money: 'Eur'}</span>
                                 <span class="product-price-int-value hidden">{$item['cena_bez_dph'] * constant('DPH')}</span>
                                 <span class="small">
                                     (vč. DPH {constant('DPH_PROCENTO')}%) 
-                                    <span class="fa fa-info-circle" data-toggle="tooltip" data-plament="top" title="Částka je zaokrouhlena na celé koruny nahoru"></span>
+                                    <span class="fa fa-info-circle" data-toggle="tooltip" data-plament="top" title="Částka je zaokrouhlena na celé eura nahoru"></span>
                                 </span>
                                 <br/>
-                                <span class="small"><i>{$item['cena_bez_dph']|money: 'Kč'} (bez DPH)</i></span>
+                                <span class="small"><i>{$item['cena_bez_dph']|money: 'Eur'} (bez DPH)</i></span>
 
                             </span>         
                             <span class="availability margin-bottom-base">{$item['dostupnost']['nazev']}</span>

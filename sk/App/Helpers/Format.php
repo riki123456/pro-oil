@@ -169,6 +169,11 @@ final class Format {
         }
          */
         
+        // uprava, at se nam i pri $currency = 'Eur' zobrazuje jen znak
+        if(strtoupper($currency) == 'EUR') {
+            $currency = '€';
+        }
+        
         return ($currency === NULL) ? $formatted : $formatted . ' ' . $currency;
     }
 

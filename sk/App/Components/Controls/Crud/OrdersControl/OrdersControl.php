@@ -101,7 +101,7 @@ class OrdersControl extends Crud\CrudControl {
                 $this->template->grafTitle = 'Peněžní objem (cena bez DPH) v objednávkách za posledních 12 měsíců';
                 $this->template->grafTitleIconClass = 'fa-area-chart';
 
-                $this->template->grafLabel = '["suma v kč (bez DPH)"]';
+                $this->template->grafLabel = '["suma v Eur (bez DPH)"]';
                 $this->template->grafXkey = 'y';
                 $this->template->grafYkeys = '["a"]';
 

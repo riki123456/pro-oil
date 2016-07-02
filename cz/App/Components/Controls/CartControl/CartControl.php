@@ -146,7 +146,7 @@ class CartControl extends Components\BaseControl {
         $fcol = $this->presenter->getComponent("jsDynamic")->getCompiler()->getFileCollection();
         $fcol->addFile(ROOT_FS_WWW . '/media/nette/live-form-validation.min.js');
         $fcol->addFile(ROOT_FS_WWW . '/media/numeral/numeral.min.js');
-        $fcol->addFile(ROOT_FS_WWW . '/media/numeral/languages/cs.min.js');
+        $fcol->addFile(ROOT_FS_WWW . '/media/numeral/languages/' . LANG . '.min.js');
         $fcol->addFile(__DIR__ . '/../Scripts/Form.js');
 
         #-- template params
