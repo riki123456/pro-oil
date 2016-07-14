@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Tracy (http://tracy.nette.org)
- * Copyright (c) 2004 David Grudl (http://davidgrudl.com)
+ * This file is part of the Tracy (https://tracy.nette.org)
+ * Copyright (c) 2004 David Grudl (https://davidgrudl.com)
  */
 
 namespace Tracy\Bridges\Nette;
@@ -12,8 +12,6 @@ use Nette;
 
 /**
  * Tracy extension for Nette DI.
- *
- * @author     David Grudl
  */
 class TracyExtension extends Nette\DI\CompilerExtension
 {
@@ -25,6 +23,7 @@ class TracyExtension extends Nette\DI\CompilerExtension
 		'browser' => NULL,
 		'errorTemplate' => NULL,
 		'strictMode' => NULL,
+		'showBar' => NULL,
 		'maxLen' => NULL,
 		'maxDepth' => NULL,
 		'showLocation' => NULL,
@@ -83,8 +82,8 @@ class TracyExtension extends Nette\DI\CompilerExtension
 					'$this->getService(?)->addPanel(?);',
 					Nette\DI\Compiler::filterArguments(array(
 						$this->prefix('bar'),
-						is_string($item) ? new Nette\DI\Statement($item) : $item)
-					)
+						is_string($item) ? new Nette\DI\Statement($item) : $item,
+					))
 				));
 			}
 		}

@@ -3,7 +3,7 @@
     <div>{include content}</div>
 {/capture}
 
-{include '../../Base/Templates/Layouts/top.latte', 'googleUniversalAnalytics' => constant("GOOGLE_ANALYTICS")|noescape}
+{include '../../Base/Templates/Layouts/top.latte', 'googleUniversalAnalytics' => constant('GOOGLE_ANALYTICS')}
 
 <!-- Navigation -->
 {include Components/navigation.latte|strip}
