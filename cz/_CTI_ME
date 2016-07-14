@@ -1,5 +1,5 @@
 TinyMCE problem
-==========================
+===========================
 v production modu, kdyz sjednocuju vsechny js a css do jednoho souboru, ma tinymce problem a nemuze najit sve .js od pluginu apod.
 asi proto, ze hleda z nejakeho duvodu ne-minifikovanou verzi ... chce loadovat "plugin.js" a ne "plugin.min.js"
 - tezko rict proc ... obejdeme tak, ze mu ty soubory vytvorime a je ;)) ... z xxx.min.js udelam xxx.js, ktere ale bude uvnitr taky min ;)
